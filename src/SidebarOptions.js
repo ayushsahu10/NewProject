@@ -8,7 +8,6 @@ function SidebarOptions({active, text , Icon}) {
             && 'sidebaroptions--active'}`}>
             {Icon}
             <h2>{text}</h2>
-         
         </div>
     );
 }

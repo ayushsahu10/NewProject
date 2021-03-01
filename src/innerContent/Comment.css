@@ -1,39 +1,39 @@
 .comment1 {
-  display: flex;
-  align-items: flex-start;
-  border-bottom: 1px solid var(--twitter-background);
-  padding-bottom: 10px;
-  padding-top: 10px;
-}
-
-.comment_footer {
-  display: flex;
-  justify-content: space-between;
-
-  margin-top: 10px;
-}
-
-.comment__headerSpecial {
-  font-weight: 600;
-  font-size: 12px;
-  color: gray;
-}
-
-.comment__headerText > h3 {
-  font-size: 15px;
-  margin-bottom: 5px;
-}
-
-.comment__headerDescription {
-  margin-bottom: 10px;
-  font-size: 15px;
-}
-
-.comment__body {
-  flex: 1;
-  padding: 10px;
-}
-
-.comment__avatar {
-  padding: 15px;
-}
+    display: flex;
+    align-items: flex-start;
+    border-bottom: 1px solid var(--twitter-background);
+    padding-bottom: 10px;
+    padding-top: 10px;
+  }
+  
+  .comment_footer {
+    display: flex;
+    justify-content: space-between;
+  
+    margin-top: 10px;
+  }
+  
+  .comment__headerSpecial {
+    font-weight: 600;
+    font-size: 12px;
+    color: gray;
+  }
+  
+  .comment__headerText > h3 {
+    font-size: 15px;
+    margin-bottom: 5px;
+  }
+  
+  .comment__headerDescription {
+    margin-bottom: 10px;
+    font-size: 15px;
+  }
+  
+  .comment__body {
+    flex: 1;
+    padding: 10px;
+  }
+  
+  .comment__avatar {
+    padding: 15px;
+  }

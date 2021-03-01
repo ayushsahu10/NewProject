@@ -5,6 +5,16 @@
   flex-direction: column;
 }
 
+.sidebar__top {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.sidebar__icon {
+  display: flex;
+  flex-direction: column;
+}
+
 .icon {
   color: var(--twitter-color);
   font-size: 60px !important;
@@ -14,5 +24,8 @@
 @media only screen and (max-width: 800px){
   .sidebar {
     flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    border: none;
   }
 }
