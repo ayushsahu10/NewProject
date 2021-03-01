@@ -1,0 +1,79 @@
+.content > img {
+  height: 300px;
+  width: 100%;
+  border-radius: 20px;
+}
+
+.content > h1 {
+  text-align: center;
+  padding-bottom: 20px;
+  padding-top: 10px;
+}
+
+/* .main {
+    display: flex;
+    align-items: flex-start;
+    flex: 1;
+  }
+  */
+.comment {
+  text-align: center;
+  display: flex;
+  padding-left: 300px;
+  justify-content: space-between;
+}
+
+.comment > h1 {
+  padding-right: 70px;
+}
+
+.dropdown {
+  float: right;
+}
+
+.myClassName {
+  border-radius: 20px;
+}
+
+.pollcss {
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+/*
+.bottom__text {
+  height: 40px;
+  position: fixed;
+  bottom: 0%;
+  width: 60%;
+}
+*/
+.bottombox {
+  position: fixed;
+  width: 50%;
+  height: 40px;
+  margin-left: -25%;
+  bottom: 78px;
+  left: 50%;
+}
+
+.bottombox > form {
+  display: flex;
+  flex-direction: column;
+  background-color: #50b7f5;
+  border-radius: 20px;
+}
+.bottombox__input {
+  padding: 20px;
+  display: flex;
+}
+.bottombox__input > input {
+  flex: 1;
+  margin-left: 20px;
+  font-size: 20px;
+  border: none;
+}
+.bottombox__post {
+  background-color: orchid !important;
+}

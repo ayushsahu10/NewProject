@@ -1,0 +1,51 @@
+.cards {
+  color: black;
+  display: flex;
+  border-bottom: 1px solid var(--twitter-background);
+  padding: 20px;
+  flex: 1;
+
+  /* background-color: #f5f8fa; 
+  border-radius: 30px; */
+}
+
+a {
+  text-decoration: none !important;
+}
+
+.cards :hover {
+  cursor: pointer;
+}
+
+.cards > img {
+  height: 250px;
+  width: 400px;
+  border-radius: 20px;
+}
+.cards:hover {
+  /* background-color: lightsteelblue; */
+  background-color: lightgray;
+  /* border-radius: 30px; */
+
+  transition: color 100ms ease-out;
+}
+
+.para {
+  padding-left: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.para > h2 {
+  padding-bottom: 10px;
+  cursor: pointer;
+}
+/* .para :hover{
+  background-color: var(--twitter-color);
+  transition: color 100ms ease-out;'
+  border-radius: 30px;
+} */
+.para > img {
+  height: 80px;
+  width: 400px;
+}

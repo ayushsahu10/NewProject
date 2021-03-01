@@ -1,0 +1,22 @@
+body {
+  --twitter-color: #50b7f5;
+  /* --twitter-color: lightsteelblue; */
+  --twitter-background: #e6ecf0;
+  box-sizing: border-box;
+}
+
+.app {
+  display: flex;
+  flex: 1;
+  height: 100vh;
+  max-width: 1300px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 10px;
+}
+
+@media only screen and (max-width: 800px){
+  .app {
+    flex-direction: column;
+  }
+}
