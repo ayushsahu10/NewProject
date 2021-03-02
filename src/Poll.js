@@ -21,10 +21,10 @@ export default function Poll() {
          <Dislike text={"50%"} flex={0.79} like />
          <Dislike  background={"#ff0000"} text={"50%"} flex={0.29} />
         </div>
-        <div className="poll__votes" >
+        {/* <div className="poll__votes" >
             <p>10,000 votes</p>
             <p>10,000 votes</p>
-        </div>
+        </div> */}
         </div>
     )
 }

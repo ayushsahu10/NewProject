@@ -4,7 +4,9 @@
   flex: 0.15;
   flex-direction: column;
 }
-
+a {
+  text-decoration: none !important;
+}
 .sidebar__top {
   display: flex;
   justify-content: space-around;

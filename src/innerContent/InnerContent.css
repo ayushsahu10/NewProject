@@ -1,26 +1,44 @@
+.main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.main__heading {
+  align-items: center;
+  display: flex;
+  padding: 5px 10px;
+  justify-content: center;
+
+
+}
+.innerContent__top {
+  display: flex;
+  flex-direction: column;
+  flex: 0.95;
+  overflow: scroll;
+  padding: 20px;
+}
 .content > img {
   height: 300px;
   width: 100%;
   border-radius: 20px;
 }
 
-.content > h1 {
-  text-align: center;
-  padding-bottom: 20px;
-  padding-top: 10px;
+.main__para {
+  margin-bottom: 20px;
 }
-
 /* .main {
     display: flex;
     align-items: flex-start;
     flex: 1;
   }
   */
-.comment {
-  text-align: center;
+.comment__top {
   display: flex;
-  padding-left: 300px;
-  justify-content: space-between;
+  padding: 20px;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
 .comment > h1 {
@@ -36,11 +54,33 @@
 }
 
 .pollcss {
-  width: 100%;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  display: flex;
+  flex: 1;
+  padding: 20px 0px;
+
 }
 
+.pollcss__left {
+  flex: 1;
+}
+
+.pollcss__right> div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.pollcss__right> div:hover{
+  cursor: pointer;
+}
+
+.pollcss__right {
+  display: flex;
+  flex: 1;
+  justify-content: space-evenly;
+  align-items: center;
+} 
 /*
 .bottom__text {
   height: 40px;
@@ -50,30 +90,36 @@
 }
 */
 .bottombox {
-  position: fixed;
-  width: 50%;
-  height: 40px;
-  margin-left: -25%;
-  bottom: 78px;
-  left: 50%;
+  display: flex;
+  flex: 0.05;
+  padding: 0px 20px;
+}
+::-webkit-scrollbar {
+  display: none;
 }
 
 .bottombox > form {
   display: flex;
-  flex-direction: column;
+  flex: 1;
   background-color: #50b7f5;
+  align-items: center;
   border-radius: 20px;
+  justify-content: space-evenly;
 }
 .bottombox__input {
-  padding: 20px;
+  padding: 0px 20px;
   display: flex;
+  flex: 0.8;
+  align-items: center;
+  justify-content: space-evenly;
 }
-.bottombox__input > input {
-  flex: 1;
-  margin-left: 20px;
-  font-size: 20px;
-  border: none;
-}
-.bottombox__post {
-  background-color: orchid !important;
+
+
+@media only screen and (max-width: 800px){
+  .pollcss {
+    flex-direction: column;
+  }
+  .pollcss__right  {
+    margin-top: 15px;
+  }
 }
