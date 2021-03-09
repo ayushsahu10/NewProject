@@ -1,0 +1,50 @@
+.about {
+  flex: 0.7;
+  display: flex;
+  flex-direction: column;
+  border-right: 2px solid var(--twitter-background);
+}
+
+.about__header {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: center;
+  border-bottom: 15px solid var(--twitter-background);
+}
+
+.background__image > img {
+  width: 80%;
+  height: 25%;
+  margin-top: 1px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+}
+
+.profile__image > img {
+  width: 170px;
+  margin-top: 155px;
+  margin-left: 20px;
+  border: 1px green solid;
+  border-radius: 50%;
+}
+
+.edit__profile {
+  position: absolute;
+  top: 340px;
+  right: 350px;
+}
+
+.about__username {
+  padding-left: 32px;
+  text-decoration: solid;
+  font-weight: 800;
+  font-size: 150%;
+}
+
+.about__bio {
+  padding-left: 500px;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
