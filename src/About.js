@@ -8,7 +8,10 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import Cards from './Cards';
+import AboutTab from './AboutTab';
 import { Block } from '@material-ui/icons';
+import { green } from '@material-ui/core/colors';
 
 
 function TabPanel(props) {
@@ -93,16 +96,19 @@ export default function About() {
             <div className={classes.root}>
              <AppBar position="static">
         <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
-          <Tab label="Item One" {...a11yProps(0)} />
-          <Tab label="Item Two" {...a11yProps(1)} />
-          <Tab label="Item Three" {...a11yProps(2)} />
+          <Tab label="Recent Votes" {...a11yProps(0)} />
+          <Tab label="Recent Commments" {...a11yProps(1)} />
+          <Tab label="Saved" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        Item One
+      <AboutTab />
+      <AboutTab />
+      <AboutTab />
+      <AboutTab />
+        
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
       </TabPanel>
       <TabPanel value={value} index={2}>
         Item Three
