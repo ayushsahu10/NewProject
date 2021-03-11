@@ -2,42 +2,51 @@
   flex: 0.7;
   display: flex;
   flex-direction: column;
-  border-right: 2px solid var(--twitter-background);
+  overflow: scroll;
 }
 
 .about__header {
   padding-top: 10px;
   padding-bottom: 10px;
   text-align: center;
+  position:' -webkit-sticky';
   border-bottom: 15px solid var(--twitter-background);
 }
 
 .background__image > img {
   width: 80%;
   height: 25%;
-  margin-top: 1px;
   display: block;
-  margin-left: auto;
-  margin-right: auto;
   position: relative;
 }
 
-.profile__image > img {
+.profile__image {
+ display: flex;
+ justify-content: space-between;
+ padding: 15px;
+}
+
+.profile__image__name {
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.profile__image__icon {
   width: 170px;
   margin-top: 155px;
-  margin-left: 20px;
   border: 1px green solid;
   border-radius: 50%;
 }
 
-.edit__profile {
-  position: absolute;
-  top: 340px;
-  right: 350px;
+.profile__image__edit{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 280px;
 }
 
 .about__username {
-  padding-left: 32px;
   text-decoration: solid;
   font-weight: 800;
   font-size: 150%;
@@ -47,4 +56,10 @@
   padding-left: 500px;
   padding-top: 50px;
   padding-bottom: 50px;
+}
+
+@media only screen and (max-width: 1000px){
+  .about {
+   flex: 1;
+  }
 }
