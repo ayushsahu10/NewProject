@@ -1,0 +1,31 @@
+.search {
+    flex: 0.7;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    padding: 15px;
+    /* background-image: url("search.jpg"); */
+}
+.widgets__input {
+    display: flex;
+    align-items: center;
+    background-color: var(--twitter-background);
+    padding: 10px;
+    border-radius: 20px;
+    margin-top: 10px;
+  }
+.widgets__input > input {
+    border: none;
+    outline: none;
+    flex: 1;
+    background-color: var(--twitter-background);
+  }
+  
+  .widgets__searchIcon {
+    color: gray;
+  }
+@media only screen and (max-width: 1000px){
+    .search {
+     flex: 1;
+    }
+  }

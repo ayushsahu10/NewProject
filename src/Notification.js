@@ -11,15 +11,13 @@ function Notification() {
             
             <h2> Notifications</h2>
             </div>
-            <NotificationContent />
-            <NotificationContent />
+            <NotificationContent type={'like'} />
+            <NotificationContent type={'replied'}/>
+            <NotificationContent type={'like'} />
+            <NotificationContent type={'replied'} />
+            <NotificationContent type={'like'} />
+            <NotificationContent type={'replied'} />
 
-            <NotificationContent />
-        
-            <NotificationContent />
-            
-            <NotificationContent />
-            <NotificationContent />
         </div>
     )
 }
