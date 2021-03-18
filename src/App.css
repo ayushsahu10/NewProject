@@ -16,5 +16,6 @@ body {
   .app {
     flex-direction: column;
     box-sizing: border-box;
+    position: sticky;
   }
 }
