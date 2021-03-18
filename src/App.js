@@ -1,3 +1,4 @@
+import React from 'react';
 import "./App.css";
 import Sidebar from "./Sidebar";
 import Feed from "./Feed";
@@ -8,10 +9,21 @@ import Notification from './Notification'
 import Search from './Search'
 import Bookmark from './Bookmark'
 import About from './About'
+import LoginSec from './LoginSec';
+import RegisterSec from './RegisterSec';
 
 function App() {
+
+
   return (
     <div className="app">
+      <div className="top__header">
+        <div className="header__button">
+         <p>To vote in different topics and comment your opinion you need to login/sign-up first.   </p> 
+       <LoginSec />
+        <RegisterSec />
+        </div>
+      </div>
     <Router>
       <Sidebar />
         <Switch>
@@ -36,6 +48,7 @@ function App() {
         </Switch>
         <Widgets />
     </Router>
+
     </div>
   );
 }

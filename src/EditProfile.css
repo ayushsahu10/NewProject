@@ -1,0 +1,25 @@
+.edit__img__cover > img {
+  width: 550px;
+  height: 200px;
+  display: block;
+}
+
+.edit__image__profile > img {
+  display: flex;
+  width: 170px;
+  margin-left: 35%;
+  border-radius: 50%;
+}
+
+.edit__image__profile > img:hover {
+  cursor: pointer;
+}
+
+.edit__img__cover > img:hover {
+  cursor: pointer;
+}
+
+.edit__header {
+  display: flex;
+  justify-content: space-between;
+}

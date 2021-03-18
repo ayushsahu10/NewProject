@@ -9,7 +9,7 @@
   padding-top: 10px;
   padding-bottom: 10px;
   text-align: center;
-  position:' -webkit-sticky';
+  position: " -webkit-sticky";
   border-bottom: 15px solid var(--twitter-background);
 }
 
@@ -21,9 +21,9 @@
 }
 
 .profile__image {
- display: flex;
- justify-content: space-between;
- padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
 }
 
 .profile__image__name {
@@ -39,7 +39,7 @@
   border-radius: 50%;
 }
 
-.profile__image__edit{
+.profile__image__edit {
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -58,8 +58,8 @@
   padding-bottom: 50px;
 }
 
-@media only screen and (max-width: 1000px){
+@media only screen and (max-width: 1000px) {
   .about {
-   flex: 1;
+    flex: 1;
   }
 }

@@ -12,6 +12,9 @@ import Cards from "./Cards";
 import AboutTab from "./AboutTab";
 import { Block } from "@material-ui/icons";
 import { green } from "@material-ui/core/colors";
+import RecentComment from './RecentComment'
+import { Button } from "@material-ui/core";
+import EditProfile from "./EditProfile";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -86,14 +89,14 @@ export default function About() {
             <span className="username__user"> @ayushsahu </span>
           </div>
           <div className="profile__image__edit">
-            <h3>Edit Profile </h3>
-            <EditIcon />
+            <Button ><EditProfile />
+            <EditIcon /></Button>
           </div>
         </div>
       </div>
 
-      <div className={classes.root} style={{ marginTop: "200px" }}>
-        <AppBar position="sticky">
+      <div className={classes.root} style={{ marginTop: "200px"}}>
+        <AppBar position="sticky" >
           <Tabs
             value={value}
             onChange={handleChange}
@@ -110,7 +113,10 @@ export default function About() {
           <AboutTab />
           <AboutTab />
         </TabPanel>
-        <TabPanel value={value} index={1}></TabPanel>
+        <TabPanel value={value} index={1}>
+        <RecentComment />
+        <RecentComment />
+        </TabPanel>
         <TabPanel value={value} index={2}>
           Item Three
         </TabPanel>

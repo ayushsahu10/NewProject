@@ -2,7 +2,6 @@ body {
   --twitter-color: #50b7f5;
   /* --twitter-color: lightsteelblue; */
   --twitter-background: #e6ecf0;
- 
 }
 
 .app {
@@ -10,12 +9,41 @@ body {
   flex: 1;
   height: 100vh;
   padding: 0 10px;
+  margin-top: 44px;
+  position: sticky;
 }
 
-@media only screen and (max-width: 800px){
+@media only screen and (max-width: 800px) {
   .app {
     flex-direction: column;
     box-sizing: border-box;
     position: sticky;
   }
+}
+
+.top__header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  width: 100%;
+  height: 49px;
+  background-color: var(--twitter-background);
+  display: flex;
+}
+
+.header__button {
+  display: flex;
+  position: absolute;
+  right: 50px;
+
+  height: 120px;
+  margin: 7px;
+  justify-content: space-between;
+  text-decoration: solid;
+}
+.header__button > p {
+  text-decoration: solid;
+  font-size: 20px;
+  font-family: Georgia, "Times New Roman", Times, serif;
 }
