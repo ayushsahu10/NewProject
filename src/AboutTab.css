@@ -4,8 +4,13 @@
   border-bottom: 1px solid var(--twitter-background);
   padding: 20px;
   flex: 1;
-  /* background-color: #f5f8fa; 
-      border-radius: 30px; */
+  border-radius: 20px;
+  margin: 15px;
+  box-shadow: 0 4px 8px 0 var(--twitter-background),
+    0 6px 20px 0 var(--twitter-background);
+  margin: 15px;
+  border-radius: 20px;
+  transition: box-shadow, transform 0.2s;
 }
 
 a {
@@ -22,11 +27,9 @@ a {
   border-radius: 20px;
 }
 .about__tab:hover {
-  /* background-color: lightsteelblue; */
-  background-color: lightgray;
-  /* border-radius: 30px; */
-
-  transition: color 100ms ease-out;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.19),
+    0 6px 20px 0 var(--twitter-background);
+  transform: scale(1.01);
 }
 
 .innerpara {
@@ -71,5 +74,8 @@ a {
   }
   .cards > img {
     width: 100%;
+  }
+  .innerpara > h2 {
+    font-size: 20px;
   }
 }

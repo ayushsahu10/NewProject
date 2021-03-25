@@ -23,3 +23,11 @@
   display: flex;
   justify-content: space-between;
 }
+
+@media only screen and (max-width: 800px) {
+  .edit__img__cover > img {
+    width: 390px;
+    height: 200px;
+    display: block;
+  }
+}

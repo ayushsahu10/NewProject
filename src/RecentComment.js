@@ -1,7 +1,6 @@
 import React from 'react'
 import './RecentComment.css'
-import Modal from '@material-ui/core/Modal';
-import Poll from "./Poll";
+import { Link } from "react-router-dom";
 
 
 
@@ -11,6 +10,7 @@ function RecentComment() {
     
     return (
         <div>
+          <Link to={`/feed/1236`}>
             <div className="about__tab">
         <img src="farmer.jpg"></img>
 
@@ -19,11 +19,12 @@ function RecentComment() {
           
 
           <p>
-          You have voted for <span className="about__poll"> disagree </span> on this Poll.
+          Your Comment: I totally agree with farmer protest. count me in the protest
           </p>
         </div>
         
       </div>
+      </Link>
         </div>
     )
 }
