@@ -5,7 +5,7 @@ import Skeleton from "@material-ui/lab/Skeleton";
 import SearchLoading from "./SearchLoading";
 
 export default function Search() {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   return (
     <div className="search">

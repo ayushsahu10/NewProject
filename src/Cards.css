@@ -9,11 +9,13 @@
   margin: 15px;
   border-radius: 20px;
   transition: box-shadow, transform 0.2s;
+  justify-content: space-between;
 }
 
 .para > a {
   color: #000;
   text-decoration: none !important;
+  margin: 15px;
 }
 
 .cards:hover {
@@ -25,6 +27,7 @@
 .cards > img {
   height: 100%;
   width: 25%;
+  object-fit: cover;
   border-radius: 20px;
 }
 .cards > img :hover {
@@ -62,6 +65,11 @@
   align-items: center;
   justify-content: space-between;
 }
+
+.desktop__heading > a{
+  text-decoration: none !important;
+  color: #000;
+}
 @media only screen and (max-width: 1000px) {
   .cards {
     flex-direction: column;
@@ -69,9 +77,6 @@
   }
   .para {
     margin-top: 10px;
-  }
-  .para > p {
-    margin: 15px;
   }
   .cards > img {
     width: 100%;

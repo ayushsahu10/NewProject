@@ -56,33 +56,31 @@ const DotMenu = () => {
   );
 };
 
-function Cards() {
+
+function Cards({headLine, img, favour, against, description, uid  }) {
   return (
     <div className="cards">
       <div className="mob__heading">
-        <h2>#2020–2021 Indian farmers' protest</h2>
+        <h2>{headLine}</h2>
         <DotMenu />
       </div>
 
-      <img src="farmer.jpg" className="img"></img>
+      <img src={`${img}`} className="img"></img>
 
       <div className="para">
         <div className="desktop__heading">
-          <Link to={`/feed/1236`}>
-            <h2>#2020–2021 Indian farmers' protest</h2>
+          <Link to={`/feed/${uid}`}>
+            <h2>{headLine}</h2>
           </Link>
          <DotMenu />
         </div>
-        <Link to={`/feed/1236`}>
+        <Link to={`/feed/${uid}`}>
           <p>
-            The farmers fear that the bills would render the current Minimum
-            Support Price (MSP) procurement system ineffective and they would be
-            forced to make distress sales to private companies. , leaving them
-            at the mercy of “big farmers”
+           {description.slice(0,200)}  .........
           </p>
         </Link>
 
-        <Poll />
+        <Poll favour={favour} against={against} />
       </div>
     </div>
   );

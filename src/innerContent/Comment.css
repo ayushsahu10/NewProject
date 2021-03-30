@@ -1,15 +1,15 @@
 .comment1 {
     display: flex;
     align-items: flex-start;
-    border-bottom: 1px solid var(--twitter-background);
     padding-bottom: 10px;
     padding-top: 10px;
   }
   
   .comment_footer {
     display: flex;
+    width: 40%;
+    align-items: center;
     justify-content: space-between;
-  
     margin-top: 10px;
   }
   
@@ -37,3 +37,18 @@
   .comment__avatar {
     padding: 15px;
   }
+ .comment__footerDiv {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   width: 40px;
+ }
+ .comment__footerDiv > p {
+  font-weight: bold;
+  cursor: pointer;
+ }
+ @media only screen and (max-width: 1000px){
+  .comment_footer{
+    width: 80%;
+  }
+ }

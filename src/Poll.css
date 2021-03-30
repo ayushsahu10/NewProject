@@ -3,6 +3,7 @@
     display: flex;
     border-radius: 20px;
     background-color: #00ff84;
+    justify-content: space-between;
 }
 .poll__dislike {
     display: flex;

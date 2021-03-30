@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import ShareIcon from "@material-ui/icons/Share";
 import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
@@ -19,8 +17,8 @@ import {
   LinkedinIcon,
 } from "react-share";
 
-export default function PostUtilities() {
-  const [isMore, setIsMore] = useState(false);
+export default function PostUtilities({ismore}) {
+  
   const [shareModal, setShareModal] = useState(false);
 
   return (
@@ -73,13 +71,7 @@ export default function PostUtilities() {
         </IconButton>
         <p>save </p>
       </div>
-      <div onClick={() => setIsMore(!isMore)}>
-        <IconButton>
-          {" "}
-          {isMore ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-        </IconButton>
-        {isMore ? <p>Less </p> : <p>More </p>}
-      </div>
+      {ismore}
     </div>
   );
 }

@@ -90,7 +90,29 @@
   justify-content: space-evenly;
 }
 
+.comment {
+  border-bottom: 1px solid var(--twitter-background);
+}
 
+.comment__replyShowButton {
+    margin-left: 50px;
+    margin-bottom: 15px;
+    display: flex;
+    cursor: pointer;
+    transition: font-weight 0.1s;
+}
+
+.comment__replyShowButton > p {
+  margin-left: 15px;
+}
+
+.comment__replyShowButton:hover{
+  font-weight: bold;
+}
+
+.comment__replies {
+  margin-left: 50px;
+}
 @media only screen and (max-width: 1000px){
   .main{
     flex: 1;

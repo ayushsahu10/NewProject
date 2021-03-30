@@ -1,8 +1,9 @@
 .sidebar {
   border-right: 2px solid var(--twitter-background);
   display: flex;
-  flex: 0.15;
+  flex: 0.20;
   flex-direction: column;
+  position: sticky;
 }
 a {
   text-decoration: none !important;
@@ -23,11 +24,15 @@ a {
   margin-left: 20px;
   margin-bottom: 20px;
 }
-@media only screen and (max-width: 800px){
+@media only screen and (max-width: 1000px){
   .sidebar {
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
     border: none;
+    position: sticky;
+  }
+  .icon{
+    display: none !important;
   }
 }

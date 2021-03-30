@@ -17,7 +17,7 @@ function App() {
 
   return (
     <div className="app">
-      <div className="top__header">
+     <div className="top__header">
         <div className="header__button">
          <p>To vote in different topics and comment your opinion you need to login/sign-up first.   </p> 
        <LoginSec />
@@ -25,9 +25,9 @@ function App() {
         </div>
       </div>
     <Router>
-      <Sidebar />
+    { window.innerWidth > 1000 ? <Sidebar /> : null  }
         <Switch>
-          <Route path="/feed/:feedId">
+          <Route path="/feed/:postId">
             <InnerContent />
           </Route>
           <Route path="/notifications">
@@ -47,6 +47,9 @@ function App() {
           </Route>
         </Switch>
         <Widgets />
+
+        { window.innerWidth <= 1000 ? <Sidebar /> : null  }
+        
     </Router>
 
     </div>

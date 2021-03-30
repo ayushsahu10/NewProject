@@ -1,0 +1,28 @@
+.commentbox {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+
+  .commentbox > form {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  
+  .commentbox__input {
+    background-color: #fff;
+    display: flex;
+    border: none;
+    width: 60%;
+    height: 60px;
+    border-bottom: 2px solid red;
+    outline: none;
+  }
+
+  @media only screen and (max-width: 1000px){ 
+    .commentbox__thumb > p {
+      display: none;
+    }
+  }
