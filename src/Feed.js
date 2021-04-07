@@ -9,6 +9,7 @@ import LinearProgress from "@material-ui/core/LinearProgress";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import db from "./firebase.js";
 import FlatList from "flatlist-react";
+import HomeIcon from '@material-ui/icons/Home';
 
 function Feed() {
   const [isLoading, setIsLoading] = useState(false);
@@ -82,11 +83,10 @@ function Feed() {
 
   return (
     <div className="feed">
-      <div className="feed__header">
-        <h2 className="newsfeed">
-          <DescriptionIcon /> Latest News
-        </h2>
-      </div>
+      <div className='feed__header' >
+            <HomeIcon  fontSize={'large'} />
+            <p>Home</p>
+        </div>
       <div className="feed__posts">
         {isLoading ? (
           <div className="loading">

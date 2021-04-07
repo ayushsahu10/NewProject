@@ -15,7 +15,7 @@ import FlatList from "flatlist-react";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import CommentBox from '../CommentBox.js';
 import firebase from 'firebase'
-
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 const options = ["Select opinion", "Favour", "Against"];
 
@@ -96,15 +96,20 @@ console.log(item);
         postId={postId}
         postReply={postReply}
       />
+      {item.repliesLen ? 
+      <div>
       {repliesLoading ? (
         <div className="comment__replyShowButton">
           <CircularProgress size={20} /> <p>Loading replies...</p>
         </div>
       ) : (
         <div className="comment__replyShowButton" onClick={() => getReplies()}>
-          {showReply ? <p>Hide replies</p> : <p>View replies</p>}
+          {showReply ? <p>Hide replies</p> : <p>View {item.repliesLen} replies</p>}
         </div>
       )}
+      </div>
+      : null}
+      
       <Divider />
       {showReply ? (
         <div className="comment__replies">
@@ -173,9 +178,18 @@ function InnerContent() {
       setLastDoc(snapshot.docs[snapshot.docs.length - 1]);
 
       for (let i = 0; i < snapshot.docs.length; i++) {
+        let rp =  await db
+        .collection("posts")
+        .doc(postId)
+        .collection("comments")
+        .doc(snapshot.docs[i].id)
+        .collection('replies')
+        .get()
+
         newComments.push({
           ...snapshot.docs[i].data(),
           uid: snapshot.docs[i].id,
+          repliesLen:rp.docs.length
         });
       }
 
@@ -205,9 +219,18 @@ function InnerContent() {
           setLastDoc(snapshot.docs[snapshot.docs.length - 1]);
 
           for (let i = 0; i < snapshot.docs.length; i++) {
+            let rp =  await db
+            .collection("posts")
+            .doc(postId)
+            .collection("comments")
+            .doc(snapshot.docs[i].id)
+            .collection('replies')
+            .get()
+
             newComments.push({
               ...snapshot.docs[i].data(),
               uid: snapshot.docs[i].id,
+              repliesLen:rp.docs.length
             });
           }
 
@@ -221,8 +244,6 @@ function InnerContent() {
   };
 
   const postComment = (data,e) => {
-
-
           db.collection("posts")
           .doc(postId)
           .collection("comments")
@@ -293,7 +314,7 @@ function InnerContent() {
             <CommentBox postComment={postComment}  />
             <Divider />
             {commentLoading ? (
-              <p>loading</p>
+              <div style={{display:'flex',justifyContent:'center',marginTop:'15px'}} > <CircularProgress /> </div>
             ) : (
               <FlatList
                 list={comments}
@@ -319,7 +340,7 @@ function InnerContent() {
         </div>
       );
     default:
-      return <h2>loading</h2>;
+      return  <div className="main__loading"> <CircularProgress /> </div>;
   }
 }
 

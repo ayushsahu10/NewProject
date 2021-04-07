@@ -5,6 +5,13 @@
   justify-content: space-between;
   overflow-y: scroll;
 }
+.main__loading {
+  display: flex;
+  flex: 0.7;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 .main__heading {
   align-items: center;
   display: flex;
@@ -119,5 +126,8 @@
   }
   .pollcss {
     flex-direction: column;
+  }
+  .main__loading{
+    flex: 1;
   }
 }

@@ -17,13 +17,6 @@ function App() {
 
   return (
     <div className="app">
-     <div className="top__header">
-        <div className="header__button">
-         <p>To vote in different topics and comment your opinion you need to login/sign-up first.   </p> 
-       <LoginSec />
-        <RegisterSec />
-        </div>
-      </div>
     <Router>
     { window.innerWidth > 1000 ? <Sidebar /> : null  }
         <Switch>
@@ -42,9 +35,13 @@ function App() {
           <Route path="/about">
             <About />
           </Route>
+          <Route path="/feed">
+            <Feed />
+          </Route>
           <Route path="/">
             <Feed />
           </Route>
+          
         </Switch>
         <Widgets />
 

@@ -74,26 +74,24 @@ function Comment({
   return (
     <div>
     <div className="comment1">
-      <div className="comment__avatar">
+      <div className="comment__header">
         <Avatar src={`${iconUrl}`}></Avatar>
-      </div>
-      <div className="comment__body">
-        <div className="comment__header">
-          <div className="comment__headerText">
+        <div className="comment__headerText">
             <h3>
               {name}
-              <span className="comment__headerSpecial"> @{userName} </span>{" "}
+              <span className="comment__headerSpecial"> @{userName} </span>
             </h3>
           </div>
-          <div className="comment__headerDescription">
+      </div>
+      <div className="comment__body">
+        <div className="comment__headerDescription"> 
             <p>{text}</p>
           </div>
-        </div>
         <div className="comment_footer">
           <div className="comment__footerDiv" onClick={pressLike}>
             <IconButton>
               {likes.includes("JTxOVoaP5yKJrDZUwQUd") ? (
-                <ThumbUpIcon fontSize="small" />
+                <ThumbUpIcon fontSize="small" color={'primary'}  />
               ) : (
                 <ThumbUpAltOutlinedIcon fontSize="small" />
               )}
@@ -103,7 +101,7 @@ function Comment({
           <div className="comment__footerDiv" onClick={pressDislike}>
             <IconButton>
               {dislikes.includes("JTxOVoaP5yKJrDZUwQUd") ? (
-                <ThumbDownIcon fontSize="small" />
+                <ThumbDownIcon fontSize="small" color={'primary'} />
               ) : (
                 <ThumbDownAltOutlinedIcon fontSize="small" />
               )}
