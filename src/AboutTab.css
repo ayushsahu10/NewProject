@@ -1,16 +1,16 @@
 .about__tab {
   color: black;
   display: flex;
+  flex-direction: column;
   border-bottom: 1px solid var(--twitter-background);
   padding: 20px;
   flex: 1;
-  border-radius: 20px;
-  margin: 15px;
-  box-shadow: 0 4px 8px 0 var(--twitter-background),
-    0 6px 20px 0 var(--twitter-background);
-  margin: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 #e2e7ea,
+    0 6px 20px 0 #e2e7ea;
   border-radius: 20px;
   transition: box-shadow, transform 0.2s;
+  margin-top: 10px;
 }
 
 a {
@@ -21,25 +21,18 @@ a {
   cursor: pointer;
 }
 
-.about__tab > img {
-  height: 15%;
-  width: 15%;
-  border-radius: 20px;
-}
 .about__tab:hover {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.19),
-    0 6px 20px 0 var(--twitter-background);
+  box-shadow: 0 4px 8px 0 rgba(151,213,250,0.5),
+  0 6px 20px 0 rgba(151,213,250,0.5);
   transform: scale(1.01);
 }
 
 .innerpara {
-  padding-left: 15px;
   display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
+  margin-bottom: 10px;
 }
 .innerpara > h2 {
-  padding-bottom: 10px;
+  margin-left: 10px;
   cursor: pointer;
 }
 /* .para :hover{
@@ -48,8 +41,9 @@ a {
       border-radius: 30px;
     } */
 .innerpara > img {
-  height: 80px;
-  width: 400px;
+  height: 10vh;
+  width: 25vw;
+  object-fit: contain;
 }
 
 .innerpara > p {
@@ -62,20 +56,8 @@ a {
 }
 
 @media only screen and (max-width: 800px) {
-  .cards {
-    flex-direction: column;
-    align-items: center;
-  }
-  .innerpara {
-    margin-top: 10px;
-  }
-  .innerpara > p {
-    margin-bottom: 10px;
-  }
-  .cards > img {
-    width: 100%;
-  }
+ 
   .innerpara > h2 {
-    font-size: 20px;
+    font-size: 15px;
   }
 }

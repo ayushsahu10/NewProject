@@ -1,38 +1,52 @@
 .comment1 {
-    display: flex;
-    align-items: flex-start;
-    padding-bottom: 10px;
-    padding-top: 10px;
+    padding:  5px 15px;
   }
   
+  .comment__header {
+    display: flex;
+    align-items: center;
+  }
+  .comment__headerText {
+    margin-left: 25px;
+    align-items: center;
+    display: flex;
+  }
+  .comment__body {
+    flex: 1;
+    margin-left: 20px;
+    padding: 0px 15px ;
+    margin-top: 15px;
+    border-left: 2px solid var(--twitter-background);
+  }
+
   .comment_footer {
     display: flex;
     width: 40%;
     align-items: center;
     justify-content: space-between;
-    margin-top: 10px;
   }
   
   .comment__headerSpecial {
     font-weight: 600;
     font-size: 12px;
-    color: gray;
+    margin-left: 5px ;
+    color:#FFF;
+    background-color:rgba(0, 124, 199, 0.7);
+    border-radius: 5px;
+    padding: 2px 5px ;
+    justify-content: center;
   }
   
   .comment__headerText > h3 {
-    font-size: 15px;
-    margin-bottom: 5px;
+    font-size: 20px;
+    color: #12232e;
   }
   
   .comment__headerDescription {
-    margin-bottom: 10px;
     font-size: 15px;
   }
   
-  .comment__body {
-    flex: 1;
-    padding: 10px;
-  }
+
   
   .comment__avatar {
     padding: 15px;

@@ -12,6 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import ShareIcon from '@material-ui/icons/Share';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import ReportIcon from '@material-ui/icons/Report';
+
 const DotMenu = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -61,7 +62,9 @@ function Cards({headLine, img, favour, against, description, uid  }) {
   return (
     <div className="cards">
       <div className="mob__heading">
-        <h2>{headLine}</h2>
+      <Link to={`/feed/${uid}`}>
+            <h2 style={{color:'#324e4e',fontSize:'20px'}} ># {headLine}</h2>
+          </Link>
         <DotMenu />
       </div>
 
@@ -70,7 +73,7 @@ function Cards({headLine, img, favour, against, description, uid  }) {
       <div className="para">
         <div className="desktop__heading">
           <Link to={`/feed/${uid}`}>
-            <h2>{headLine}</h2>
+            <h2 style={{color:'#324e4e',fontSize:'20px'}} ># {headLine}</h2>
           </Link>
          <DotMenu />
         </div>
