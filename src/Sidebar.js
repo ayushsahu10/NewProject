@@ -8,6 +8,7 @@ import NotificationsNoneIcon from "@material-ui/icons/NotificationsNone";
 import { NavLink } from "react-router-dom";
 import Header from "./Header.js";
 import TouchAppIcon from "@material-ui/icons/TouchApp";
+import LoginSidebar from './LoginSidebar'
 
 function Sidebar() {
   return (
@@ -82,6 +83,8 @@ function Sidebar() {
           </div>
         </NavLink>
       </div>
+      <div className="login__button__sidebar">
+   <LoginSidebar /></div>
     </div>
   );
 }

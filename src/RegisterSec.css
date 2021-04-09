@@ -12,3 +12,18 @@
   margin-top: 20px;
   margin-bottom: 10px;
 }
+
+.register__main {
+  display: flex;
+}
+
+.left__image__register {
+  display: flex;
+}
+
+.right__text__register {
+  display: flex;
+}
+
+.left__image__register > img {
+}

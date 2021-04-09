@@ -2,13 +2,12 @@ import React from 'react'
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import './LoginSec.css'
-import PersonRoundedIcon from '@material-ui/icons/PersonRounded';
-import InputAdornment from '@material-ui/core/InputAdornment';
+import { makeStyles } from '@material-ui/core/styles';
+import logo5 from './assets/logo5.gif';
+
+
 
 function LoginSec() {
 
@@ -21,14 +20,18 @@ function LoginSec() {
     const handleClose = () => {
       setOpen(false);
     };
-
+    const styles = {
+      rootStyle: {
+        borderRadius: 20
+      }
+    };
     
   
     const mystyle = {
       color: "white",
       padding: "15px 32px",
       borderRadius: "30px",
-      backgroundColor: "var( --twitter-color)" /* Green */,
+      backgroundColor: "blue" /* Green */,
       fontSize:"15px",
         border:"none",
         boxShadow: "0px 10px 24px rgba(112, 144, 176, 0.8)",
@@ -36,74 +39,71 @@ function LoginSec() {
      
     };
 
+    const useStyles = makeStyles((theme) => ({
+      root: {
+        '& > *': {
+          margin: theme.spacing(1),
+          width: '25ch',
+          borderRadius: 15,
+        },
+      },
+    }));
+
+    const classes = useStyles();
+
     return (
         <div>
             
-            <Button style={{borderRadius: "30px"}} variant="outlined" color="primary" onClick={handleClickOpen}>
+            <Button size="large" style={{borderRadius: "30px",marginBottom:"10px"}} variant="contained" color="primary" onClick={handleClickOpen}>
         Login
       </Button>
       <div style={{ display:"flex", flexDirection:"column",alignItems:"center"}}>
-      <Dialog open={open} onClose={handleClose}  aria-labelledby="form-dialog-title" style={{ backgroundImage: `url("bg2.jpg")` ,backgroundRepeat: 'no-repeat',backgroundSize: 'cover'}} >
-          <div  style={{ width:"400px"}}>
-        <h2 style={{textAlign:"center",marginTop:"70px",marginBottom:"20px",fontSize:"30px",fontWeight:"bold",opacity:"1",color:"#15233D"}}>Sign In</h2>
+      <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md" aria-labelledby="form-dialog-title" classes={{ paper: classes.rootStyle }} style={{ backgroundImage: `url("bg2.jpg")` ,backgroundRepeat: 'no-repeat',backgroundSize: 'cover',}}>
+        <div className="login__main">
+          <div className="left__img__login" ><img src={"logo5.gif"}></img></div>
+          <div className="right__text__login">
+    
+          <Button style={{color: "blue", position: "absolute", right: "-5px" ,fontSize:"20px"}} onClick={handleClose} color="black">
+            ✖
+          </Button> 
         
-        <DialogContent>
-        
-          
-          <form>
-  <label>
-    <input
-     type="text" 
-     name="name" 
-     startAdornment={
-      <InputAdornment position="start">
-        <PersonRoundedIcon />
-      </InputAdornment>
-    }
-     placeholder="username or email"
-     fullWidth
-     style={{
-        width: "75%",
-        padding: "12px 20px",
-        margin: "8px 0",
-        boxSizing: "border-box",
-        borderRadius: "15px",
-        boxShadow: "0px 10px 24px rgba(136, 136, 136, 0.40)" ,
-        marginLeft:"12%",
-        fontFamily:"sans-serif",
-        fontSize:"20px",
-        outline:"none",
-        
-       border:"0"
-    }}
-     />
-<input
-     type="password" 
-     name="password" 
-     placeholder="password"
-     fullWidth
-     style={{
-        width: "75%",
-        padding: "12px 20px",
-        
-        boxSizing: "border-box",
-        borderRadius: "15px",
-        boxShadow: "0px 10px 24px rgba(136, 136, 136, 0.40)",
-        marginLeft:"12%",
-        marginTop:"20px",
-        fontSize:"20px",
-        outline:"none",
-        border:"0"
-    }}
-     />
-  </label>
+        <DialogContent >
+        <h2 style={{marginLeft:"50px",marginTop:"30px",marginBottom:"20px",fontSize:"30px",fontWeight:"bold",opacity:"1",color:"#15233D", }}>Sign In</h2>
+<form className={classes.root} noValidate autoComplete="off">
+ 
+  
+  <TextField
+    id="name"
+    label="Username or Email"
+    variant="outlined"
+    color="primary"
+    style={{
+      marginLeft:"12%",
+      width:"75%",
+      marginTop:"20px",   
+  }}
+  />
+
+<TextField
+  type="password" 
+    id="password"
+    label="Password"
+    variant="outlined"
+    color="primary"
+    style={{
+      marginLeft:"12%",
+      width:"75%",
+      marginTop:"20px",   
+  }}
+  />
+  <p style={{marginLeft:"12%",}}>Forgot Password?</p>
 </form>
 <div style={{display:"flex",flexDirection:"column",justifyContent:"center",margin:"30px 100px 30px 100px"}}>
 <Button onClick={handleClose} color="primary" variant="outlined" style={mystyle}>
             Sign In
           </Button>
           </div>
-          <div style={{paddingTop:"40px",display:"flex", flexDirection:"column", alignItems:"center"}}>
+          <div style={{paddingTop:"20px",display:"flex", flexDirection:"column", alignItems:"center"}}>
           <span
           style={{
            opacity:"0.5",
@@ -125,6 +125,7 @@ function LoginSec() {
           </div>
         </DialogContent>
         </div>
+        </div>
       </Dialog>
       
       </div>
@@ -134,3 +135,6 @@ function LoginSec() {
 }
 
 export default LoginSec
+
+
+

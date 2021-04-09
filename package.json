@@ -9,6 +9,8 @@
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.3",
     "@testing-library/user-event": "^12.6.2",
+    "firebase": "^8.3.3",
+    "flatlist-react": "^1.5.0",
     "install": "^0.13.0",
     "npm": "^7.6.0",
     "react": "^17.0.1",

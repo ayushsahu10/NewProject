@@ -25,6 +25,23 @@
   opacity: 0.8;
   font-size: 16px;
   font-weight: bold;
-  margin-top: 37px;
-  margin-bottom: 20px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.login__main {
+  display: flex;
+}
+
+.left__img__login {
+  display: flex;
+}
+
+.right__text__login {
+  display: flex;
+}
+
+.left__img__login > img {
+  width: 500px;
+  height: auto;
 }

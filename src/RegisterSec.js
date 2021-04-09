@@ -1,13 +1,19 @@
 import React from 'react'
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import PersonRoundedIcon from '@material-ui/icons/PersonRounded';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import './RegisterSec.css'
+import { makeStyles } from '@material-ui/core/styles';
+import clsx from 'clsx';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import TextField from '@material-ui/core/TextField';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import IconButton from '@material-ui/core/IconButton';
+
 
 function RegisterSec() {
 
@@ -25,110 +31,142 @@ function RegisterSec() {
         color: "white",
         padding: "15px 32px",
         borderRadius: "30px",
-        backgroundColor: "var( --twitter-color)" /* Green */,
+        backgroundColor: "blue" /* Green */,
         fontSize:"15px",
           border:"none",
           boxShadow: "0px 10px 24px rgba(112, 144, 176, 0.8)",
         };
 
-const textStyle = {
-    width: "80%",
-    padding: "10px 20px",
-    margin: "8px 0",
-    boxSizing: "border-box",
-    borderRadius: "15px",
-    boxShadow: "0px 10px 24px rgba(136, 136, 136, 0.40)" ,
-    marginLeft:"12%",
-    fontFamily:"sans-serif",
-    fontSize:"19px",
-    outline:"none",
-    marginTop:"20px",
-   border:"0"
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+      width: '25ch',
+      borderRadius: 15,
+      display: 'flex',
+    flexWrap: 'wrap',
+    },
+    margin: {
+      margin: theme.spacing(1),
+    },
+    withoutLabel: {
+      marginTop: theme.spacing(3),
+    },
+    textField: {
+      width: '25ch',
+    },
+  },
+}));
+
+const classes = useStyles();
+
+const [values, setValues] = React.useState({
+  amount: '',
+  password: '',
+  weight: '',
+  weightRange: '',
+  showPassword: false,
+});
+
+const handleChange = (prop) => (event) => {
+  setValues({ ...values, [prop]: event.target.value });
 };
+
+const handleClickShowPassword = () => {
+  setValues({ ...values, showPassword: !values.showPassword });
+};
+
+const handleMouseDownPassword = (event) => {
+  event.preventDefault();
+};
+
 
     return (
         <div>
             
-            <Button style={{borderRadius: "30px"}} variant="outlined" color="primary" onClick={handleClickOpen}>
-        Sign Up
-      </Button>
-      <div style={{ display:"flex", flexDirection:"column",alignItems:"center"}}>
-      <Dialog open={open} onClose={handleClose}  aria-labelledby="form-dialog-title" style={{ backgroundImage: `url("bg2.jpg")` ,backgroundRepeat: 'no-repeat',backgroundSize: 'cover',}} >
-          <div  style={{ width:"440px"}}>
-        <h2 style={{textAlign:"center",marginTop:"10px",marginBottom:"0px",fontSize:"30px",fontWeight:"bold",opacity:"1",color:"#15233D"}}>Sign Up</h2>
-        
+            <Button size="large" style={{borderRadius: "30px",marginTop:"10px"}} variant="contained" color="primary" onClick={handleClickOpen}>
+            Sign Up
+           </Button>
+           <div style={{ display:"flex", flexDirection:"column",alignItems:"center"}}>
+          <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md"  aria-labelledby="form-dialog-title" style={{ backgroundImage: `url("bg2.jpg")` ,backgroundRepeat: 'no-repeat',backgroundSize: 'cover',}} >
+          <div className="register__main">
+       <div className="left__image__register"><img src="register3.jpg"></img></div>
+        <div className="right__text__register">
+
+        <Button style={{color: "blue", position: "absolute", right: "-5px" ,fontSize:"20px"}} onClick={handleClose} color="black">
+            ✖
+          </Button> 
         <DialogContent>
-        
-          
-          <form>
-  <label>
-     
-    <input
-     type="text" 
-     name="name" 
-     placeholder="Enter your name"
-     fullWidth
-     style={textStyle}
-     />
 
-<input
-     type="text" 
-     name="username" 
-     placeholder="Enter your username"
-     fullWidth
-     style={textStyle}
-     />
 
-<input
-     type="text" 
-     name="email"      
-     placeholder="Enter your e-mail"
-     fullWidth
-     style={textStyle}
-     />
+        <h2 style={{marginLeft:"50px",marginTop:"30px",marginBottom:"20px",fontSize:"30px",fontWeight:"bold",opacity:"1",color:"#15233D", }}>Sign Up</h2>
+<form className={classes.root} noValidate autoComplete="off">
+ 
+  
+        <TextField
+         id="name"
+          label="Enter your Name"
+          variant="outlined"
+          color="primary"
+          style={{
+            marginLeft:"12%",
+                   width:"90%",
+            marginTop:"20px",   
+        }}
+        />
+      
+       <TextField
+           id="username"
+           label="Enter your Username"
+           variant="outlined"
+                  color="primary"
+           style={{
+             marginLeft:"12%",
+             width:"90%",
+             marginTop:"20px",   
+         }}
+         />
+       
+       <TextField
+           id="E-mail"
+           label="Enter your Email"
+           variant="outlined"
+          color="primary"
+           style={{
+             marginLeft:"12%",
+             width:"90%",
+            marginTop:"20px",   
+         }}
+         />
+       
+       
+       <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined"  style={{marginLeft:"12%",     width:"90%", marginTop:"20px",  }}>
+          <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+          <OutlinedInput
+            id="outlined-adornment-password"
+            type={values.showPassword ? 'text' : 'password'}
+            value={values.password}
+            onChange={handleChange('password')}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                >
+                  {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            }
+            labelWidth={70}
+          />
+        </FormControl>
 
-<input
-     type="password" 
-     name="password" 
-     placeholder="Enter your password"
-     fullWidth
-     style={{
-        width: "80%",
-        padding: "12px 20px",        
-        boxSizing: "border-box",
-        borderRadius: "15px",
-        boxShadow: "0px 10px 24px rgba(136, 136, 136, 0.40)",
-        marginLeft:"12%",
-        marginTop:"20px",
-        fontSize:"19px",
-        outline:"none",
-        border:"0"
-    }}
-     />
-
-<input
-     type="password" 
-     name="confirm password" 
-     placeholder="Confirm your password"
-     fullWidth
-     style={{
-        width: "80%",
-        padding: "12px 20px",
-        boxSizing: "border-box",
-        borderRadius: "15px",
-        boxShadow: "0px 10px 24px rgba(136, 136, 136, 0.40)",
-        marginLeft:"12%",
-        marginTop:"25px",
-        fontSize:"19px",
-        outline:"none",
-        border:"0"
-    }}
-     />
-
-  </label>
 </form>
-<div style={{display:"flex",flexDirection:"column",justifyContent:"center",margin:"20px 100px 20px 100px"}}>
-<Button onClick={handleClose} color="primary" variant="outlined" style={mystyle}>
+
+          <div style={{display:"flex",flexDirection:"column",justifyContent:"center",margin:"20px 100px 20px 100px"}}>
+          <Button onClick={handleClose} color="primary" variant="outlined" style={mystyle}>
             Sign Up
           </Button>
           </div>
@@ -151,6 +189,7 @@ const textStyle = {
               <p>Sign In</p>
           </div>
         </DialogContent>
+        </div>
         </div>
       </Dialog>
       
