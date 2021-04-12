@@ -108,10 +108,10 @@ export default function About() {
           </Tabs>
         </AppBar>
         <TabPanel value={value} index={0}>
+          {/* <AboutTab />
           <AboutTab />
           <AboutTab />
-          <AboutTab />
-          <AboutTab />
+          <AboutTab /> */}
         </TabPanel>
         <TabPanel value={value} index={1}>
         <RecentComment />
