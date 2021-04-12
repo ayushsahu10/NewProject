@@ -15,15 +15,27 @@
 
 .register__main {
   display: flex;
+  flex: 1;
 }
 
 .left__image__register {
   display: flex;
+  flex: 1;
 }
 
-.right__text__register {
+.right_text_register {
   display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+}
+.left__image__register > img {
+  
 }
 
-.left__image__register > img {
+
+@media only screen and (max-width: 800px) {
+  .left__image__register  {
+    display: none;
+  }
 }
