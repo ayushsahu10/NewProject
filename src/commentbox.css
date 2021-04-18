@@ -1,28 +1,31 @@
 .commentbox {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    margin-bottom: 15px;
-  }
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 15px;
+  border: black;
+  border-radius: 20px;
+  background-color: #f0f2f5;
+}
 
-  .commentbox > form {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-  }
-  
-  .commentbox__input {
-    background-color: #fff;
-    display: flex;
-    border: none;
-    width: 60%;
-    height: 60px;
-    border-bottom: 2px solid red;
-    outline: none;
-  }
+.commentbox > form {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
 
-  @media only screen and (max-width: 1000px){ 
-    .commentbox__thumb > p {
-      display: none;
-    }
+.commentbox__input {
+  display: flex;
+  border: none;
+  width: 60%;
+  height: 50px;
+  border-bottom: 2px solid red;
+  outline: none;
+  background-color: #f0f2f5;
+}
+
+@media only screen and (max-width: 1000px) {
+  .commentbox__thumb > p {
+    display: none;
   }
+}

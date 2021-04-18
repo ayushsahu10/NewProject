@@ -12,7 +12,7 @@ import Cards from "./Cards";
 import AboutTab from "./AboutTab";
 import { Block } from "@material-ui/icons";
 import { green } from "@material-ui/core/colors";
-import RecentComment from './RecentComment'
+import RecentComment from "./RecentComment";
 import { Button } from "@material-ui/core";
 import EditProfile from "./EditProfile";
 
@@ -52,7 +52,7 @@ function a11yProps(index) {
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
+    // backgroundColor: theme.palette.background.paper,
   },
 }));
 
@@ -71,7 +71,7 @@ export default function About() {
       </div>
       <div
         style={{
-          backgroundImage: "url(" + "/farmer.jpg" + ")",
+          backgroundImage: "url(" + "/farmer2.jpg" + ")",
           width: "100%",
           height: "250px",
           backgroundPosition: "center top",
@@ -83,28 +83,39 @@ export default function About() {
           <div className="profile__image__name">
             <img
               className="profile__image__icon"
-              src="http://www.pngall.com/wp-content/uploads/5/Profile-Avatar-PNG.png"
+              // src="http://www.pngall.com/wp-content/uploads/5/Profile-Avatar-PNG.png"
+              src="avatar2.png"
             ></img>
             <span className="about__username">Ayush Sahu </span>
             <span className="username__user"> @ayushsahu </span>
           </div>
           <div className="profile__image__edit">
-            <Button ><EditProfile />
-            <EditIcon /></Button>
+            <Button>
+              <EditProfile />
+              <EditIcon />
+            </Button>
           </div>
         </div>
       </div>
 
-      <div className={classes.root} style={{ marginTop: "200px"}}>
-        <AppBar position="sticky" >
+      <div className={classes.root} style={{ marginTop: "200px" }}>
+        <AppBar position="sticky" style={{ backgroundColor: "white" }}>
           <Tabs
             value={value}
             onChange={handleChange}
             aria-label="simple tabs example"
+            variant="fullWidth"
+            indicatorColor="primary"
+            selectionFollowsFocus
+            style={{
+              backgroundColor: "white",
+              color: "black",
+              // boxShadow: "0px 10px 24px rgba(112, 144, 176, 0.8)",
+            }}
           >
             <Tab label="Recent Votes" {...a11yProps(0)} />
             <Tab label="Recent Commments" {...a11yProps(1)} />
-            <Tab label="Saved" {...a11yProps(2)} />
+            {/* <Tab label="Saved" {...a11yProps(2)} /> */}
           </Tabs>
         </AppBar>
         <TabPanel value={value} index={0}>
@@ -114,12 +125,12 @@ export default function About() {
           <AboutTab /> */}
         </TabPanel>
         <TabPanel value={value} index={1}>
-        <RecentComment />
-        <RecentComment />
+          {/* <RecentComment />
+          <RecentComment /> */}
         </TabPanel>
-        <TabPanel value={value} index={2}>
+        {/* <TabPanel value={value} index={2}>
           Item Three
-        </TabPanel>
+        </TabPanel> */}
       </div>
     </div>
   );

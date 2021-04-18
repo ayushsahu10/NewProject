@@ -1,7 +1,7 @@
 .main {
-    flex: 0.6;
-    display: flex;
-    flex-direction: column;
+  flex: 0.6;
+  display: flex;
+  flex-direction: column;
 }
 .search__header {
   display: flex;
@@ -27,13 +27,12 @@
   flex: 1;
   height: 100vh;
   padding: 10px;
-  background-color: #FFF;
+  background-color: #fff;
   margin: 15px;
   margin-bottom: 0px;
   border-radius: 10px;
   overflow-y: hidden;
-  box-shadow: 0 4px 8px 0 #e2e7ea,
-  0 6px 20px 0 #e2e7ea;
+  box-shadow: 0 4px 8px 0 #e2e7ea, 0 6px 20px 0 #e2e7ea;
 }
 
 .search__posts {
@@ -42,39 +41,40 @@
 }
 
 .widgets__input {
-    display: flex;
-    align-items: center;
-    background-color: var(--twitter-background);
-    padding: 10px;
-    border-radius: 10px;
-    margin-top: 10px;
-    position: sticky;
-    background-color: #ecf2f6;
-  }
+  display: flex;
+  align-items: center;
+  background-color: var(--twitter-background);
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 10px;
+  position: sticky;
+  background-color: #ecf2f6;
+}
 .widgets__input > input {
-    border: none;
-    outline: none;
-   
+  border: none;
+  outline: none;
+
+  flex: 1;
+  background-color: #ecf2f6;
+}
+.widgets__input > input::placeholder {
+  color: #67707d;
+}
+
+.widgets__input > .MuiIconButton-root {
+  padding: 2px;
+}
+.widgets__searchIcon {
+  color: gray;
+}
+
+.search__img {
+  height: 100%;
+  width: 100%;
+}
+@media only screen and (max-width: 1000px) {
+  .search {
     flex: 1;
-    background-color: #ecf2f6;
+    margin: 0px;
   }
-  .widgets__input > input::placeholder{
-    color: #67707d;
-  }
-
-  .widgets__input > .MuiIconButton-root{
-    padding: 2px;
-  }
-  .widgets__searchIcon {
-    color: gray;
-  }
-
-  .search__img {
-    height: 100%;
-  width: 100%;  }
-@media only screen and (max-width: 1000px){
-    .search {
-     flex: 1;
-     margin: 0px;
-    }
-  }
+}

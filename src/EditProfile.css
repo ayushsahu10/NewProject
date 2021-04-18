@@ -1,33 +1,48 @@
+.edit__image__profile,
+.edit__img__cover {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.edit__image__icon,
+.edit__cover__icon {
+  position: absolute;
+}
+
+.change__image {
+}
+
+.change__cover {
+}
+
+.image__cover__overlay {
+}
+
+.edit__text {
+}
+
 .edit__img__cover > img {
-  width: 550px;
+  width: 560px;
   height: 200px;
-  display: block;
+  filter: opacity(70%);
 }
 
 .edit__image__profile > img {
-  display: flex;
   width: 170px;
-  margin-left: 35%;
   border-radius: 50%;
-}
-
-.edit__image__profile > img:hover {
-  cursor: pointer;
-}
-
-.edit__img__cover > img:hover {
-  cursor: pointer;
-}
-
-.edit__header {
-  display: flex;
-  justify-content: space-between;
+  filter: opacity(70%);
 }
 
 @media only screen and (max-width: 800px) {
   .edit__img__cover > img {
     width: 390px;
-    height: 200px;
+    height: 150px;
     display: block;
+  }
+
+  .edit__image__profile > img {
+    width: 100px;
   }
 }

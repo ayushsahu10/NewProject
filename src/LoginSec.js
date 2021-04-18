@@ -40,7 +40,7 @@ function LoginSec() {
     color: "white",
     padding: "15px 32px",
     borderRadius: "30px",
-    backgroundColor: "blue" /* Green */,
+    backgroundColor: "rgba(56,56,209,255)",
     fontSize: "15px",
     border: "none",
     boxShadow: "0px 10px 24px rgba(112, 144, 176, 0.8)",
@@ -118,7 +118,7 @@ function LoginSec() {
     <div>
       <Button
         size="large"
-        style={{ borderRadius: "30px", marginBottom: "10px" }}
+        style={{ borderRadius: "30px", marginBottom: "10px",backgroundColor:"rgba(56,56,209,255)" }}
         variant="contained"
         color="primary"
         onClick={handleClickOpen}
@@ -157,7 +157,7 @@ function LoginSec() {
             <div className="right__text__login">
               <Button
                 style={{
-                  color: "blue",
+                  color: "rgba(56,56,209,255)",
                   position: "absolute",
                   right: "-5px",
                   fontSize: "20px",

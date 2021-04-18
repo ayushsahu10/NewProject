@@ -11,6 +11,9 @@ import Bookmark from "./Bookmark";
 import About from "./About";
 import { auth } from "./firebase.js";
 import db from "./firebase.js";
+import { BounceLoader, DotLoader, HashLoader,RingLoader,PropagateLoader} from 'react-spinners';
+import loader from "./assets/loader.gif";
+import { Height } from "@material-ui/icons";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(null);
@@ -43,7 +46,10 @@ function App() {
   return (
     <div className="app">
       {loading ? (
-        <h1>loading</h1>
+        <div className="loader"> 
+        <RingLoader size={100} color='rgba(56,56,209,255)' />
+        {/* <img src={"loader.gif"} style={{height:"100%" , width:"100%"}}></img> */}
+        </div> 
       ) : (
         <Router>
           {window.innerWidth > 1000 ? <Sidebar userData={userData} /> : null}

@@ -4,11 +4,12 @@
   justify-content: space-evenly;
   border-radius: 20px;
   box-shadow: 0 4px 8px 0 var(--twitter-background),
-  0 6px 20px 0 var(--twitter-background);
+    0 6px 20px 0 var(--twitter-background);
   margin-bottom: 10px;
   transition: box-shadow, transform 0.2s;
+  background-color: white;
 }
-.notification__content:hover{
+.notification__content:hover {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.19),
     0 6px 20px 0 var(--twitter-background);
   transform: scale(1.01);
@@ -29,7 +30,7 @@
   top: 20px;
   color: #f83d3d;
 }
-.notification__content >p {
+.notification__content > p {
   margin-left: 15px;
 }
 

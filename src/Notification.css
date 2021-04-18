@@ -15,8 +15,8 @@
   flex-direction: column;
 }
 
-@media only screen and (max-width: 1000px){
-  .notification{
+@media only screen and (max-width: 1000px) {
+  .notification {
     flex: 1;
   }
 }
