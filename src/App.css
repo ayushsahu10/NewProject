@@ -1,6 +1,5 @@
 body {
-  /* background-color: rgba(248, 249, 251, 1); */
-  background-color: rgb(232, 236, 243);
+  background-color: rgba(248,249,251,1);
 }
 
 .app {
@@ -9,9 +8,16 @@ body {
   height: 100vh;
 }
 
+.app__bottom {
+  height: 10%;
+  bottom: 0;
+}
+
 @media only screen and (max-width: 1000px) {
   .app {
     flex-direction: column;
+    overflow: auto;
+    object-fit: contain;
   }
 }
 
@@ -36,12 +42,4 @@ body {
   text-decoration: solid;
   font-size: 20px;
   font-family: Georgia, "Times New Roman", Times, serif;
-}
-
-.loader {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
 }

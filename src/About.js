@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./About.css";
 import EditIcon from "@material-ui/icons/Edit";
 import PropTypes from "prop-types";
@@ -8,13 +8,19 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import Cards from "./Cards";
+import FlatList from "flatlist-react";
+import Header from "./Header.js";
 import AboutTab from "./AboutTab";
-import { Block } from "@material-ui/icons";
-import { green } from "@material-ui/core/colors";
-import RecentComment from "./RecentComment";
+import LinearProgress from '@material-ui/core/LinearProgress';
 import { Button } from "@material-ui/core";
 import EditProfile from "./EditProfile";
+import AccountBoxIcon from "@material-ui/icons/AccountBox";
+import db from "./firebase.js";
+import {auth} from "./firebase.js";
+import { useParams } from "react-router-dom";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import { Redirect } from 'react-router'
+import Avatar from '@material-ui/core/Avatar';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -52,86 +58,176 @@ function a11yProps(index) {
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    // backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.background.paper,
   },
 }));
 
-export default function About() {
+export default function About({userId}) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  const [loading, setLoading] = useState(false);
+  const [userData, setUserData] = useState({});
+  const [likedPosts, setLikedPosts] = useState([]);
+  const [dislikedPosts, setDislikesPosts] = useState([]);
+  const [redirect, setRedirect] = useState(false);
+
+  const { uid } = useParams();
+
+  useEffect(() => {
+    getUserData();
+    getLikedPosts();
+    getDislikedPosts();
+  }, [uid]);
+
+  const getUserData = () => {
+    setLoading(true);
+    db.collection("userDetails")
+      .doc(uid)
+      .get()
+      .then((data) => setUserData(data.data()))
+      .then(() => setLoading(false));
+  };
+
+  const getLikedPosts = () => {
+    let p = [];
+    db.collection("posts")
+      .where("favour", "array-contains", uid)
+      .get()
+      .then((data) => data.docs.map((d) => p.push({ ...d.data(), uid: d.id })))
+      .then(() => setLikedPosts(p));
+  };
+
+  const getDislikedPosts = () => {
+    let p = [];
+    db.collection("posts")
+      .where("against", "array-contains", uid)
+      .get()
+      .then((data) => data.docs.map((d) => p.push({ ...d.data(), uid: d.id })))
+      .then(() => setDislikesPosts(p));
+  };
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
+  const signOut = () => {
+    auth.signOut();
+    setRedirect(true);
+  }
+
+  if (redirect) {
+    return <Redirect to='/feed'/>;
+  }
+
   return (
     <div className="about">
-      <div className="about__header">
-        <h2>Username</h2>
-      </div>
-      <div
-        style={{
-          backgroundImage: "url(" + "/farmer2.jpg" + ")",
-          width: "100%",
-          height: "250px",
-          backgroundPosition: "center top",
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-        }}
-      >
-        <div className="profile__image">
-          <div className="profile__image__name">
-            <img
-              className="profile__image__icon"
-              // src="http://www.pngall.com/wp-content/uploads/5/Profile-Avatar-PNG.png"
-              src="avatar2.png"
-            ></img>
-            <span className="about__username">Ayush Sahu </span>
-            <span className="username__user"> @ayushsahu </span>
-          </div>
-          <div className="profile__image__edit">
-            <Button>
-              <EditProfile />
-              <EditIcon />
-            </Button>
-          </div>
-        </div>
-      </div>
+      <Header icon={<AccountBoxIcon fontSize={"large"} />} text={"Profile"} />
 
-      <div className={classes.root} style={{ marginTop: "200px" }}>
-        <AppBar position="sticky" style={{ backgroundColor: "white" }}>
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            aria-label="simple tabs example"
-            variant="fullWidth"
-            indicatorColor="primary"
-            selectionFollowsFocus
+      {loading ? (
+       <LinearProgress />
+      ) : (
+        <div className="about__body">
+          <div
             style={{
-              backgroundColor: "white",
-              color: "black",
-              // boxShadow: "0px 10px 24px rgba(112, 144, 176, 0.8)",
+              backgroundImage: "url(" + "/farmer.jpg" + ")",
+              width: "100%",
+              height: "250px",
+              backgroundPosition: "center top",
+              backgroundSize: "cover",
+              backgroundRepeat: "no-repeat",
             }}
           >
-            <Tab label="Recent Votes" {...a11yProps(0)} />
-            <Tab label="Recent Commments" {...a11yProps(1)} />
-            {/* <Tab label="Saved" {...a11yProps(2)} /> */}
-          </Tabs>
-        </AppBar>
-        <TabPanel value={value} index={0}>
-          {/* <AboutTab />
-          <AboutTab />
-          <AboutTab />
-          <AboutTab /> */}
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          {/* <RecentComment />
-          <RecentComment /> */}
-        </TabPanel>
-        {/* <TabPanel value={value} index={2}>
-          Item Three
-        </TabPanel> */}
-      </div>
+            <div className="profile__image">
+              <div className="profile__image__name">
+                {/* <img
+                  className="profile__image__icon"
+                  src={`${userData.iconUrl}`}
+                ></img> */}
+                <Avatar alt="Profile Icon"   src={`${userData.iconUrl}`} />
+                <span className="about__username">{userData.name}</span>
+                <span className="username__user">@{userData.userName}</span>
+              </div>
+             
+              
+              <div className="profile__image__edit">
+               <Button
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                  onClick={signOut}
+                  className={classes.button}
+                  startIcon={<ExitToAppIcon />}
+                >
+                  LogOUt
+                </Button> 
+                {userId === uid ? 
+                
+                  <EditProfile userData={userData} reload={getUserData} />
+                  : null}
+              </div>
+            </div>
+            <div className="about__bio" >
+              <p style={{ fontSize: "15px", color: "#c8d6d2" }} >{userData.bio}</p>
+              </div>
+          </div>
+          <div className={classes.root} style={{ marginTop: "200px" }}>
+            <AppBar
+              position="sticky"
+              style={{
+                backgroundColor: "white",
+                boxShadow: "none",
+                position: "static",
+              }}
+            >
+              <Tabs
+                value={value}
+                onChange={handleChange}
+                aria-label="simple tabs example"
+                variant="fullWidth"
+                indicatorColor="primary"
+                selectionFollowsFocus
+                style={{
+                  backgroundColor: "white",
+                  color: "black",
+                }}
+              >
+                <Tab label="In Favour" {...a11yProps(0)} />
+                <Tab label="In Against" {...a11yProps(1)} />
+              </Tabs>
+            </AppBar>
+            <TabPanel value={value} index={0}>
+              <FlatList
+                list={likedPosts}
+                renderItem={(item) => (
+                  <AboutTab
+                    uid={item.uid}
+                    headLine={item.headLine}
+                    img={item.img}
+                    favour={item.favour}
+                    against={item.against}
+                  />
+                )}
+                renderWhenEmpty={() => <div>List is empty!</div>}
+              />
+            </TabPanel>
+            <TabPanel value={value} index={1}>
+              <FlatList
+                list={dislikedPosts}
+                renderItem={(item) => (
+                  <AboutTab
+                    uid={item.uid}
+                    headLine={item.headLine}
+                    img={item.img}
+                    favour={item.favour}
+                    against={item.against}
+                  />
+                )}
+                renderWhenEmpty={() => <div></div>}
+              />
+            </TabPanel>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

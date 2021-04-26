@@ -9,13 +9,44 @@ import LinearProgress from "@material-ui/core/LinearProgress";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import db from "./firebase.js";
 import FlatList from "flatlist-react";
-import HomeIcon from '@material-ui/icons/Home';
+import HomeIcon from "@material-ui/icons/Home";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
+import {SharePost} from './PostUtilities.js';
+
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 function Feed() {
   const [isLoading, setIsLoading] = useState(false);
   const [moreLoading, setMoreLoading] = useState(false);
   const [posts, setPosts] = useState([]);
-  const [lastDoc, setLastDoc] = useState(null);
+  const [lastDoc, setLastDoc] = useState([]);
+  const [shareModal, setShareModal] = useState(false);
+  const [openAlert, setOpenAlert] = useState(false);
+  const [alertType, setAlertType] = useState('error');
+  const [alertMessage, setAlertMessage] = useState("");
+  const [postId, setPostId] = useState("");
+
+  const handleClickAlert = (type,message) => {
+    setAlertType(type);
+    setAlertMessage(message);
+    setOpenAlert(true);
+  };
+
+  const showShareModal = () => {
+    setShareModal(true);
+  }
+
+  const handleCloseAlert = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenAlert(false);
+  };
 
   const getPosts = async () => {
     setIsLoading(true);
@@ -29,7 +60,7 @@ function Feed() {
     if (!snapshot.empty) {
       let newPosts = [];
 
-      setLastDoc(snapshot.docs[snapshot.docs.length - 1].data());
+      setLastDoc(snapshot.docs[snapshot.docs.length - 1]);
 
       for (let i = 0; i < snapshot.docs.length; i++) {
         newPosts.push({ ...snapshot.docs[i].data(), uid: snapshot.docs[i].id });
@@ -50,14 +81,14 @@ function Feed() {
         let snapshot = await db
           .collection("posts")
           .orderBy("timestamp", "desc")
-          .startAfter(lastDoc.timestamp)
+          .startAfter(lastDoc.data().timestamp)
           .limit(4)
           .get();
 
         if (!snapshot.empty) {
           let newPosts = posts;
 
-          setLastDoc(snapshot.docs[snapshot.docs.length - 1].data());
+          setLastDoc(snapshot.docs[snapshot.docs.length - 1]);
 
           for (let i = 0; i < snapshot.docs.length; i++) {
             newPosts.push({
@@ -83,10 +114,10 @@ function Feed() {
 
   return (
     <div className="feed">
-      <div className='feed__header' >
-            <HomeIcon  fontSize={'large'} />
-            <p>Home</p>
-        </div>
+      <div className="feed__header">
+        <HomeIcon fontSize={"large"} />
+        <p>Home</p>
+      </div>
       <div className="feed__posts">
         {isLoading ? (
           <div className="loading">
@@ -94,7 +125,7 @@ function Feed() {
           </div>
         ) : (
           <FlatList
-            list={posts.slice(0, posts.length - 1)}
+            list={posts}
             renderItem={(item) => (
               <Cards
                 headLine={item.headLine}
@@ -103,6 +134,10 @@ function Feed() {
                 favour={item.favour}
                 against={item.against}
                 uid={item.uid}
+                remove={false}
+                showShareModal={showShareModal}
+                alert={handleClickAlert}
+                setPostId={setPostId}
               />
             )}
             hasMoreItems={lastDoc !== null ? true : false}
@@ -123,6 +158,16 @@ function Feed() {
           />
         )}
       </div>
+      <Snackbar
+        open={openAlert}
+        autoHideDuration={4000}
+        onClose={handleCloseAlert}
+      >
+        <Alert onClose={handleCloseAlert} severity={alertType}>
+          {alertMessage}
+        </Alert>
+      </Snackbar>
+      <SharePost shareModal={shareModal}  setShareModal={setShareModal}  alert={handleClickAlert} url={window.location.href +`/${postId}` } />
     </div>
   );
 }

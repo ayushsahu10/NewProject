@@ -9,10 +9,24 @@ import { NavLink } from "react-router-dom";
 import Header from "./Header.js";
 import TouchAppIcon from "@material-ui/icons/TouchApp";
 import LoginSidebar from "./LoginSidebar";
+import Badge from '@material-ui/core/Badge';
+import db from './firebase.js';
+import { Link } from "react-router-dom";
 
-function Sidebar(userData) {
-  const [user, setUser] = useState(userData !== null  ? userData.userData : {});
 
+function Sidebar({userData,loggedIn}) {
+  const [user, setUser] = useState(userData);
+  const [notiCount, setNotiCount] = useState(0);
+
+  useEffect(() => {
+    if(user) getNotiCount();
+  }, [])
+
+  const  getNotiCount = () => {
+    db.collection("userDetails").doc(user.id).collection('notifications').where("seen","==",false).onSnapshot((d)=>{
+      setNotiCount(d.docs.length);
+    })
+  }
   return (
     <div className="sidebar">
       <div className="sidebar__header">
@@ -24,7 +38,8 @@ function Sidebar(userData) {
         <p>WiseIndia</p>
       </div>
 
-      {user === null ? null : (
+      {!loggedIn ? null : (
+        <Link to={`/about/${user.id}`} >
         <div className="sidebar__top">
           <img src={`${user.iconUrl}`} />
           <div className="sidebar__topDetail">
@@ -34,10 +49,11 @@ function Sidebar(userData) {
             </p>
           </div>
         </div>
+       </Link>
       )}
 
       <div className="sidebar__link">
-        {user === null ? (
+        {!loggedIn ? (
           <LoginSidebar />
         ) : (
           <>
@@ -66,8 +82,10 @@ function Sidebar(userData) {
               className="sidebar__linkInActive"
             >
               <div className="link">
+              <Badge badgeContent={notiCount}  max={9}  color="error">
                 <NotificationsNoneIcon />
-                <p>Notification</p>
+                </Badge>
+                <p>Notification</p> 
               </div>
             </NavLink>
             <NavLink
@@ -81,7 +99,7 @@ function Sidebar(userData) {
               </div>
             </NavLink>
             <NavLink
-              to={"/about"}
+              to={`/about/${user.id}`}
               activeClassName="sidebar__linkActive"
               className="sidebar__linkInActive"
             >

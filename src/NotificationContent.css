@@ -3,34 +3,43 @@
   align-items: center;
   justify-content: space-evenly;
   border-radius: 20px;
+  padding: 5px 20px ;
   box-shadow: 0 4px 8px 0 var(--twitter-background),
-    0 6px 20px 0 var(--twitter-background);
+  0 6px 20px 0 var(--twitter-background);
   margin-bottom: 10px;
   transition: box-shadow, transform 0.2s;
-  background-color: white;
+  background-color: #FFF;
+  z-index: 999;
 }
-.notification__content:hover {
+.notification__content:hover{
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.19),
     0 6px 20px 0 var(--twitter-background);
   transform: scale(1.01);
 }
-.icon {
+.notification__contentBody{
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+}
+.notification__contentBody >  p {
+  cursor: pointer;
+}
+.notification__contentIcon {
   position: relative;
 }
-.icon__image {
-  position: absolute;
+.notification__contentIconImage {
   height: 50px;
   margin-top: 25px;
   width: 50px;
-  /* z-index: -1; */
 }
 .overlay {
-  position: relative;
-  left: 25px;
-  top: 20px;
-  color: #f83d3d;
+  position: absolute;
+    right: -8px;
+    top: 50px;
+    color: #f83d3d;
 }
-.notification__content > p {
+.notification__content >p {
   margin-left: 15px;
 }
 
@@ -39,7 +48,8 @@
 }
 
 .notification__content > p {
-  padding: 15px;
+  position: relative;
+    padding: 20px;
 }
 
 .notification__time {
@@ -52,4 +62,10 @@
   height: 50px;
   border-radius: 20px;
   margin: 0px 15px;
+}
+.notification__contentDialog {
+  overflow: scroll;
+}
+.notification__contentDialogReply {
+  margin-left: 15%;
 }

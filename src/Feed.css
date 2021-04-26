@@ -11,12 +11,11 @@
   display: flex;
   width: 100%;
   padding: 10px;
-  background-color: #fcfcfd;
+  background-color: #FFF;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   border-bottom: 4px solid #f1f8ff;
-  border-radius: 10px;
 }
 
 .feed__header > p {
