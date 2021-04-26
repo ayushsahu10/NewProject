@@ -11,14 +11,16 @@ import Bookmark from "./Bookmark";
 import About from "./About";
 import { auth } from "./firebase.js";
 import db from "./firebase.js";
-import { BounceLoader, DotLoader, HashLoader,RingLoader,PropagateLoader} from 'react-spinners';
-import loader from "./assets/loader.gif";
-import { Height } from "@material-ui/icons";
+import PrivateRoute from "./PrivateRoute.js";
+import LoginSec from "./LoginSec.js";
+import RegisterSec from "./RegisterSec";
+import Lottie from "react-lottie";
+import animationData from "./earth.json";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState({});
 
   useEffect(() => {
     setTimeout(
@@ -33,41 +35,62 @@ function App() {
               .then(() => {
                 setLoading(false);
                 setLoggedIn(true);
+                console.log(userData);
               });
-          } else{
+          } else {
             setLoggedIn(false);
             setLoading(false);
           }
         }),
-      2200
+      3000
     );
   }, []);
 
   return (
     <div className="app">
       {loading ? (
-        <div className="loader"> 
-        <RingLoader size={100} color='rgba(56,56,209,255)' />
-        {/* <img src={"loader.gif"} style={{height:"100%" , width:"100%"}}></img> */}
-        </div> 
+       <div style={{display:"flex",flex:1,alignItems:"center",justifyContent:'center'}} >
+       <Lottie
+          options={{
+            loop: true,
+            autoplay: true,
+            animationData: animationData,
+            rendererSettings: {
+              preserveAspectRatio: "xMidYMid slice",
+            },
+          }}
+          height={"50%"}
+          width={"50%"}
+        />
+       </div>
       ) : (
         <Router>
-          {window.innerWidth > 1000 ? <Sidebar userData={userData} /> : null}
+          {window.innerWidth > 1000 ? (
+            <Sidebar userData={userData} loggedIn={loggedIn} />
+          ) : null}
           <Switch>
-            <Route path="/feed/:postId">
-              <InnerContent />
-            </Route>
-            <Route path="/notifications">
-              <Notification />
-            </Route>
-            <Route path="/search">
+            
+            <PrivateRoute path="/feed/:postId" loggedIn={loggedIn}>
+              <InnerContent userData={userData} />
+            </PrivateRoute>
+
+            <PrivateRoute path="/notifications" loggedIn={loggedIn}>
+              <Notification userId={userData.id} userData={userData} />
+            </PrivateRoute>
+            <PrivateRoute path="/search" loggedIn={loggedIn}>
               <Search />
-            </Route>
-            <Route path="/bookmarks">
+            </PrivateRoute>
+            <PrivateRoute path="/bookmarks" loggedIn={loggedIn}>
               <Bookmark />
+            </PrivateRoute>
+            <PrivateRoute path="/about/:uid" loggedIn={loggedIn}>
+              <About userId={userData.id}/>
+            </PrivateRoute>
+            <Route path="/register">
+              <RegisterSec />
             </Route>
-            <Route path="/about">
-              <About />
+            <Route path="/login">
+              <LoginSec />
             </Route>
             <Route path="/feed">
               <Feed />
@@ -75,10 +98,15 @@ function App() {
             <Route path="/">
               <Feed />
             </Route>
+            
           </Switch>
           <Widgets />
 
-          {window.innerWidth <= 1000 ? <Sidebar userData={userData} /> : null}
+          <div className="app__bottom">
+            {window.innerWidth <= 1000 ? (
+              <Sidebar userData={userData} loggedIn={loggedIn} />
+            ) : null}
+          </div>
         </Router>
       )}
     </div>

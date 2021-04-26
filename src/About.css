@@ -1,9 +1,7 @@
 .about {
-  flex: 0.7;
+  flex: 0.6;
   display: flex;
   flex-direction: column;
-  overflow: scroll;
-  background-color: white;
 }
 
 .about__header {
@@ -32,11 +30,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}  
+.profile__image__name > .MuiAvatar-root {
+  margin-top: 150px;
+  height: 200px;
+  width: 200px;
 }
 .profile__image__icon {
-  width: 175px;
-  height: 175px;
-  margin-top: 155px;
+  width:100%;
+  margin-top: 100%;
   border: 1px green solid;
   border-radius: 50%;
 }
@@ -45,6 +47,7 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
+  flex-direction: column;
   margin-top: 280px;
 }
 
@@ -55,13 +58,24 @@
 }
 
 .about__bio {
-  padding-left: 500px;
-  padding-top: 50px;
-  padding-bottom: 50px;
+ 
 }
+.about__body {
+  background-color: #FFF;
+  border-radius: 10px;
+  padding: 20px;
+  overflow: scroll;
+}
+.makeStyles-root-1 > .MuiPaper-elevation4 {
+  box-shadow: none;
+}
+.makeStyles-root-1 > .MuiAppBar-positionSticky {
+    position: static;
+  }
 
 @media only screen and (max-width: 1000px) {
   .about {
     flex: 1;
+    height: 90%;
   }
 }

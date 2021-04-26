@@ -18,6 +18,16 @@
 }
 
 .image__cover__overlay {
+  display: flex;
+  align-items: center;
+  padding: 25px;
+  justify-content: space-evenly;
+}
+
+.image__cover__overlay > img {
+  height: 100px;
+  width: 100px;
+  border-radius: 50px;
 }
 
 .edit__text {

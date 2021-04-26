@@ -4,7 +4,7 @@ import './Header.css';
 
 function Header({icon,text}) {
     return (
-        <div className='header' >
+        <div className='header_cmp' >
         {icon}
             <p>{text}</p>
         </div>

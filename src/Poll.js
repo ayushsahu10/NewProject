@@ -1,70 +1,144 @@
-import React,{useState} from 'react'
-import './Poll.css'
-import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
-import ThumbDownIcon from '@material-ui/icons/ThumbDown';
-import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
-import ThumbDownAltOutlinedIcon from '@material-ui/icons/ThumbDownAltOutlined';
+import React, { useState, useEffect } from "react";
+import "./Poll.css";
+import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
+import ThumbDownIcon from "@material-ui/icons/ThumbDown";
+import ThumbUpOutlinedIcon from "@material-ui/icons/ThumbUpOutlined";
+import ThumbDownAltOutlinedIcon from "@material-ui/icons/ThumbDownAltOutlined";
+import { IconButton } from "@material-ui/core";
+import { auth } from "./firebase.js";
+import db from "./firebase.js";
+import {  BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
 
-const Dislike = ({border,text,flex,like}) => {
-    return(
-        <div className="poll__dislike" style={{borderColor:border,alignItems:'center'}}  >
-           { like ? <ThumbUpOutlinedIcon  style={{color:border,fontSize:'18px'}} /> :
-          <ThumbDownAltOutlinedIcon style={{color:border,fontSize:'18px'}} />}
-           <p style={{color:'#2c4c4b',marginLeft:'10px',fontWeight:'bold',fontSize:'15px'}} >{text}</p>
+export default function Poll({ favour, against, postId,alert }) {
+  const [like, setLike] = useState(!!favour ? favour : []);
+  const [dislike, setDisLike] = useState(!!against ? against : []);
+
+  const uid = auth.currentUser !== null ? auth.currentUser.uid : "";
+
+  const [fav, setFav] = useState(
+    parseFloat(like.length / (like.length + dislike.length)).toFixed(2)
+  );
+  const [ag, setAg] = useState(
+    parseFloat(dislike.length / (like.length + dislike.length)).toFixed(2)
+  );
+
+  useEffect(() => {
+    setFav(parseFloat(like.length / (like.length + dislike.length)).toFixed(2));
+    setAg(
+      parseFloat(dislike.length / (like.length + dislike.length)).toFixed(2)
+    );
+  }, [like, dislike]);
+
+  const updateLike = () => {
+    console.log(postId, like);
+    let l = [...like];
+
+    if(!uid){
+      alert("info","Login to website...");
+      <Redirect to="/search" />
+      return;
+    }
+
+    if (dislike.includes(uid)) {
+      updateDislike();
+    }
+    if (like.includes(uid)) {
+      l = l.filter((lk) => lk !== uid);
+      setLike(l);
+    } else {
+      l.push(uid);
+      setLike(l);
+    }
+
+    db.collection("posts")
+      .doc(postId)
+      .update({
+        favour: l,
+      })
+      .then(() => console.log("like updated"));
+  };
+
+  const updateDislike = () => {
+    let l = [...dislike];
+    if(!uid){
+      alert("info","Login to website...");
+      return;
+    }
+    if (like.includes(uid)) updateLike();
+    if (dislike.includes(uid)) {
+      l = l.filter((dl) => dl !== uid);
+      setDisLike(l);
+    } else {
+      l.push(uid);
+      setDisLike(l);
+    }
+    db.collection("posts")
+      .doc(postId)
+      .update({
+        against: l,
+      })
+      .then(() => console.log("dislikes updated"));
+  };
+  
+
+  return (
+    <div className="poll">
+      <div
+        className="poll__left"
+        style={{
+          borderRight: "none",
+          flex: `${fav}`,
+          borderColor: "#4bd97e",
+          borderWidth: "2px",
+          borderTopLeftRadius: "10px",
+          borderBottomLeftRadius: "10px",
+        }}
+      >
+        <div className="poll__leftSection">
+          <IconButton onClick={updateLike}>
+            {like.includes(uid) ? (
+              <ThumbUpAltIcon style={{ fontSize: "20px", color: "#4bd97e" }} />
+            ) : (
+              <ThumbUpOutlinedIcon style={{ fontSize: "20px" }} />
+            )}
+          </IconButton>
         </div>
-    )
-}
-
-
-
-export default function Poll({favour, against}) {
-
-
-    const [fav, setFav] = useState(typeof favour !== 'undefined' ? parseFloat((favour.length/(favour.length+against.length)).toFixed(2)) : 1 );
-    const [ag, setAg] = useState(typeof against !== 'undefined' ? parseFloat((against.length/(favour.length+against.length)).toFixed(2)) : 1  );
-    
-    return (
-        // <div>
-        // <div className="poll"  >
-        //  <Dislike text={`${fav*100}%`} flex={fav} like />
-        //  <Dislike  background={"#e45e5f"} text={`${ag*100}%`} flex={ag} />
-        // </div>
-        // {/* <div className="poll__votes" >
-        //     <p>10,000 votes</p>
-        //     <p>10,000 votes</p>
-        // </div> */}
-        // </div>
-        <div className='poll' >
-            <div className='poll__section' 
-            style={{flex:fav,
-                borderTop:'1px solid #6ad593',
-                borderBottom:'1px solid #6ad593',
-                borderLeft:'1px solid #6ad593',
-                borderTopLeftRadius:'10px',
-                borderBottomLeftRadius:'10px',
-                paddingRight:'0px'
-            }}
-             >
-            <Dislike border={"#6ad593"} text={`${fav*100}%`}  like />
-            <div className='poll__sectionPara'  style={{justifyContent:'flex-start', borderTop:'3px solid #6ad593',}} >
-            <p>{favour.length} votes</p>
-            </div>
-            </div>
-
-            <div className='poll__section' 
-            style={{flex:ag,
-                borderTop:'1px solid #fc0a28',
-                borderBottom:'1px solid #fc0a28',
-                borderRight:'1px solid #fc0a28',
-                borderTopRightRadius:'10px',
-                borderBottomRightRadius:'10px',
-                paddingLeft:'0px',
-            }} >
-            <Dislike  border={"#e45e5f"} text={`${ag*100}%`} />
-            <div className='poll__sectionPara' style={{borderTop:'3px solid #fc0a28'}} >
-            <p >{against.length} votes</p>
-            </div>
-            </div>
+        <div className="poll__line">
+          <p style={{ color: "color: #323435;" }}>
+            {parseFloat(fav * 100).toFixed(0)}%
+          </p>
+          <p className="poll__linePara" style={{ borderColor: "#4bd97e" }}>
+            {like.length} Votes
+          </p>
         </div>
-    )
+      </div>
+      <div
+        className="poll__right"
+        style={{
+          borderLeft: "none",
+          flex: `${ag}`,
+          borderColor: "#ff0000",
+          borderWidth: "2px",
+          borderTopRightRadius: "10px",
+          borderBottomRightRadius: "10px",
+        }}
+      >
+        <div className="poll__line">
+          <p style={{ color: "color: #323435;" }}>{ag * 100}%</p>
+          <p className="poll__linePara" style={{ borderColor: "#ff0000" }}>
+            {dislike.length} Vote{" "}
+          </p>
+        </div>
+        <div className="poll__leftSection">
+          <IconButton onClick={updateDislike}>
+            {dislike.includes(uid) ? (
+              <ThumbDownIcon style={{ fontSize: "20px", color: "#FF0000" }} />
+            ) : (
+              <ThumbDownAltOutlinedIcon style={{ fontSize: "20px" }} />
+            )}
+          </IconButton>
+        </div>
+      </div>
+    </div>
+  );
 }

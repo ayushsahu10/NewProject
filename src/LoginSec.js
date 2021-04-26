@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -8,39 +8,47 @@ import { makeStyles } from "@material-ui/core/styles";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { auth } from "./firebase.js";
+import { auth, provider } from "./firebase.js";
 import db from "./firebase.js";
+import clsx from "clsx";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
+import InputLabel from "@material-ui/core/InputLabel";
+import FormControl from "@material-ui/core/FormControl";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import IconButton from "@material-ui/core/IconButton";
+import { Redirect } from 'react-router'
+import { Link } from "react-router-dom";
+import CloseIcon from "@material-ui/icons/Close";
+import InputAdornment from "@material-ui/core/InputAdornment";
+
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-function LoginSec() {
-  const [open, setOpen] = useState(false);
+function LoginSec({show}) {
+  const [open, setOpen] = useState(show);
   const [emailId, setEmailId] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
+  const [redirect, setRedirect] = useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  useEffect(() => {
+    console.log('=>>>>>>>>>>',show)
+  }, [])
 
   const handleClose = () => {
-    setOpen(false);
+    setRedirect(true);
   };
-  const styles = {
-    rootStyle: {
-      borderRadius: 20,
-    },
-  };
-
   const mystyle = {
     color: "white",
-    padding: "15px 32px",
+    padding: "10px 32px",
+    marginTop:"20px",
     borderRadius: "30px",
-    backgroundColor: "rgba(56,56,209,255)",
+    backgroundColor: "#2381db" /* Green */,
     fontSize: "15px",
     border: "none",
     boxShadow: "0px 10px 24px rgba(112, 144, 176, 0.8)",
@@ -52,11 +60,44 @@ function LoginSec() {
         margin: theme.spacing(1),
         width: "25ch",
         borderRadius: 15,
+        display: "flex",
+        flexWrap: "wrap",
+      },
+      margin: {
+        margin: theme.spacing(1),
+      },
+      withoutLabel: {
+        marginTop: theme.spacing(3),
+      },
+      textField: {
+        width: "25ch",
       },
     },
   }));
 
   const classes = useStyles();
+
+  const [values, setValues] = React.useState({
+    amount: "",
+    password: "",
+    weight: "",
+    weightRange: "",
+    showPassword: false,
+  });
+
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+    setPassword(event.target.value);
+  };
+
+  const handleClickShowPassword = () => {
+    setValues({ ...values, showPassword: !values.showPassword });
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
 
   const handleClickAlert = () => {
     setOpenAlert(true);
@@ -101,11 +142,12 @@ function LoginSec() {
   };
 
   const login = (id,pass) => {
+    
     auth
       .signInWithEmailAndPassword(id, pass)
       .then(() => {
         setLoading(false);
-        handleClose();
+        setRedirect(true);
       })
       .catch((e) => {
         setAlertMessage(e.message);
@@ -114,17 +156,28 @@ function LoginSec() {
       });
   };
 
+  const signInGoogle = () => {
+    setLoading(true);
+    let result = {}
+    auth.signInWithPopup(provider)
+    .then((res) => {
+      result = res;
+      setLoading(false);
+      setRedirect(true);
+
+    }).catch((e) => {
+      setLoading(false);
+      setAlertMessage(e.message);
+      handleClickAlert();
+    });
+  };
+  
+
+  if (redirect) {
+    return <Redirect to='/feed'/>;
+  }
+
   return (
-    <div>
-      <Button
-        size="large"
-        style={{ borderRadius: "30px", marginBottom: "10px",backgroundColor:"rgba(56,56,209,255)" }}
-        variant="contained"
-        color="primary"
-        onClick={handleClickOpen}
-      >
-        Login
-      </Button>
       <div
         style={{
           display: "flex",
@@ -133,7 +186,7 @@ function LoginSec() {
         }}
       >
         <Dialog
-          open={open}
+          open={true}
           onClose={handleClose}
           fullWidth
           maxWidth="md"
@@ -145,43 +198,21 @@ function LoginSec() {
             backgroundSize: "cover",
           }}
         >
-          <div className="login__main">
-            <div className="left__img__login">
-              <img
-                src={
-                  "https://firebasestorage.googleapis.com/v0/b/thewiseindia-8e9a9.appspot.com/o/logo5.gif?alt=media&token=b7d6e071-1be6-48b7-ac4b-53da30d5872c"
-                }
-                alt="not found"
-              />
-            </div>
-            <div className="right__text__login">
-              <Button
-                style={{
-                  color: "rgba(56,56,209,255)",
-                  position: "absolute",
-                  right: "-5px",
-                  fontSize: "20px",
-                }}
-                onClick={handleClose}
-                color="black"
-              >
-                ✖
-              </Button>
 
-              <DialogContent>
-                <h2
-                  style={{
-                    marginLeft: "50px",
-                    marginTop: "30px",
-                    marginBottom: "20px",
-                    fontSize: "30px",
-                    fontWeight: "bold",
-                    opacity: "1",
-                    color: "#15233D",
-                  }}
-                >
-                  Sign In
-                </h2>
+          <DialogContent style={{padding:"0px"}} >
+          <div className="r__main">
+            <div className="r__left">
+              <img src="https://firebasestorage.googleapis.com/v0/b/thewiseindia-8e9a9.appspot.com/o/register.jpg?alt=media&token=3e384896-b902-4cb2-9e8c-e06288af84db"></img>
+            </div>
+
+            <div className="r__right">
+              <div className="r__rightHeader">
+                <h3>Welcome...!</h3>
+                <IconButton onClick={handleClose}>
+                  <CloseIcon />
+                </IconButton>
+              </div>
+              <div className="r__rightBody" style={{marginTop:"8%"}} >
                 <form className={classes.root} noValidate autoComplete="off">
                   <TextField
                     id="name"
@@ -191,52 +222,72 @@ function LoginSec() {
                     variant="outlined"
                     color="primary"
                     style={{
-                      marginLeft: "12%",
-                      width: "75%",
+                      width: "90%",
                       marginTop: "20px",
                     }}
                   />
 
-                  <TextField
-                    type="password"
-                    id="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value.trim())}
-                    label="Password"
+                  <FormControl
+                    className={clsx(classes.margin, classes.textField)}
                     variant="outlined"
-                    color="primary"
                     style={{
-                      marginLeft: "12%",
-                      width: "75%",
+                      width: "90%",
                       marginTop: "20px",
                     }}
-                  />
-                  <p style={{ marginLeft: "12%" }}>Forgot Password?</p>
+                  >
+                    <InputLabel htmlFor="outlined-adornment-password">
+                      Password
+                    </InputLabel>
+                    <OutlinedInput
+                      id="outlined-adornment-password"
+                      type={values.showPassword ? "text" : "password"}
+                      value={values.password.trim()}
+                      onChange={handleChange("password")}
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                            edge="end"
+                          >
+                            {values.showPassword ? (
+                              <Visibility />
+                            ) : (
+                              <VisibilityOff />
+                            )}
+                          </IconButton>
+                        </InputAdornment>
+                      }
+                      labelWidth={70}
+                    />
+                  </FormControl>
                 </form>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    margin: "30px 100px 30px 100px",
-                  }}
-                >
-                {loading ? <CircularProgress /> : 
+                {loading ? (
                   <Button
-                    onClick={handleLogin}
                     color="primary"
                     variant="outlined"
                     style={mystyle}
                   >
-                    Sign In
-                  </Button>}
-                </div>
+                  <CircularProgress color={"#FFF"}  size={20}  />
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={() => handleLogin()}
+                    color="primary"
+                    variant="outlined"
+                    style={mystyle}
+                  >
+                    <p>Sign Up</p>
+                  </Button>
+                )}
                 <div
                   style={{
-                    paddingTop: "20px",
+                    paddingTop: "5px",
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
+                    marginTop:"20px"
                   }}
                 >
                   <span
@@ -246,14 +297,16 @@ function LoginSec() {
                       fontWeight: "bold",
                     }}
                   >
-                    Or login with
+                    Or register with
                   </span>
                 </div>
-                <div className="signinwith">
+                <div className="signinwith" onClick={signInGoogle} >
                   <img src="google.png"></img>
                 </div>
-                <div className="login__signup">
-                  <p>Sign Up</p>
+                <div className="register__signup">
+                <Link to={"/register"} >
+                  <p>Dont have an Acoount?Register... </p>
+                  </Link>
                 </div>
                 <Snackbar
                   open={openAlert}
@@ -264,12 +317,12 @@ function LoginSec() {
                     {alertMessage}
                   </Alert>
                 </Snackbar>
-              </DialogContent>
+              </div>
             </div>
           </div>
+          </DialogContent>
         </Dialog>
       </div>
-    </div>
   );
 }
 

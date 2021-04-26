@@ -1,20 +1,20 @@
-.header {
+.header_cmp {
     display: flex;
     width: 100%;
     padding: 10px;
-    background-color: #fcfcfd;
+    background-color: #FFF;
     align-items: center;
     justify-content: center;
     margin-bottom: 20px;
     border-bottom: 4px solid #f1f8ff;
-    border-radius: 10px;
+    position: static;
 }
 
-.header > p {
+.header_cmp > p {
     margin-left: 15px;
     font-weight: bold;
     color: #2c4c4b;
 }
-.header > .MuiSvgIcon-root {
+.header_cmp > .MuiSvgIcon-root {
     color: #8fa4ab;
 }

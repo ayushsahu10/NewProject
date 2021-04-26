@@ -7,7 +7,7 @@ import db from "./firebase";
 import ClearIcon from "@material-ui/icons/Clear";
 import { IconButton } from "@material-ui/core";
 import PageviewIcon from '@material-ui/icons/Pageview';
-
+import Zoom from '@material-ui/core/Zoom';
 
 export default function Search() {
   const [loading, setLoading] = useState(false);
@@ -49,6 +49,7 @@ export default function Search() {
         <PageviewIcon fontSize={"large"} />
         <p>Search</p>
       </div>
+      <Zoom in={true}>
       <div className="search">
         <div className="widgets__input">
           <SearchIcon className="widgets__searchIcon" />
@@ -90,6 +91,7 @@ export default function Search() {
           </div>
         )}
       </div>
+      </Zoom>
     </div>
   );
 }
