@@ -321,7 +321,7 @@ function RegisterSec() {
                 </div>
                 <div className="register__signup"  >
                   <Link to={"/login"}>
-                    <p>Alreay have an Acoount?Login... </p>
+                    <p>Alreay have an Account?Login... </p>
                   </Link>
                 </div>
                 <Snackbar

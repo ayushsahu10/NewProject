@@ -198,13 +198,12 @@ function Comment({
               <div className="comment__header">
               <Link to={`/about/${commentOwnerId}`} >
                 <div className="comment__headerText">
-                  <h3>
+                  <h5>
                     {name}
                     <span className="comment__headerSpecial">
-                      {" "}
-                      @{userName}{" "}
+                      @{userName}
                     </span>
-                  </h3>
+                  </h5>
                 </div>
                 </Link>
               </div>

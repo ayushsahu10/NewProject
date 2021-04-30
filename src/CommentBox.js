@@ -23,8 +23,13 @@ function CommentBox({ postComment, docRef, replyName, setReplyInput, notify, use
   const inputplaceholder = !!docRef
     ? `replying to ${replyName}...`
     : infavour
-    ? "Write your opinion in favour..."
-    : "Write your opinion in against...";
+    ? "Write your opinion in favour"
+    : "Write your opinion in against";
+  const label = !!docRef
+  ? `replying...`
+  : infavour
+  ? "In Favour"
+  : "In Against";
 
   const handleCommentSupport = () => {
     setInfavour(!infavour);
@@ -45,45 +50,54 @@ function CommentBox({ postComment, docRef, replyName, setReplyInput, notify, use
 
   return (
     <div>
-      <form className="commentbox" onSubmit={sendComment}>
+      <form className="commentbox" style={{
+            border: infavour ? "1px solid #4bd97e" : "1px solid #ff0000",
+            borderRadius:"10px"
+          }}  onSubmit={sendComment}>
+        <div className="commentboc__profileIcon" >
         <Avatar
           style={{ marginLeft: "15px", marginTop: "17px" }}
           src={`${userIcon}`}
         ></Avatar>
+        </div>
+        <div className="coomentBox__mid" >
+
         <TextField
           className="commentbox__input"
-          style={{
-            borderBottom: infavour ? "3px solid green" : "3px solid red",
-          }}
           placeholder={inputplaceholder}
           onChange={(e) => setInput(e.target.value)}
           value={input}
           rowsMax={4}
-          label={inputplaceholder}
+          label={label}
           multiline
         />
-        {!!docRef ? null : (
+        </div>
+        <div className="coomentBox__right" >
+        {!!docRef ? <p>{" "}</p> : (
           <div
             onClick={() => handleCommentSupport()}
             className="commentbox__thumb"
           >
             <IconButton>
-              {infavour ? <ThumbUpAltIcon /> : <ThumbDownIcon />}
+              {infavour ? <ThumbUpAltIcon   style={{color:"#4bd97e"}}  /> : <ThumbDownIcon  style={{color:"#ff0000"}} />}
             </IconButton>
-            <p>{infavour ? <text>In Favour</text> : <text>In Against</text>}</p>
           </div>
         )}
         <div
           style={{
             backgroundColor: "#0284fe",
-            borderRadius: "10px",
-            height: "50px",
-            width: "50px",
+            borderBottomRightRadius:"10px",
+            borderTopRightRadius:"10px",
+            alignItems:"center",
+            justifyContent:"center",
+            display:"flex",
+            flex:0.15
           }}
         >
           <IconButton onClick={sendComment}>
             <SendIcon style={{ color: "white" }} />
           </IconButton>
+        </div>
         </div>
       </form>
     </div>

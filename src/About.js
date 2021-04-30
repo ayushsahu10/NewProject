@@ -11,16 +11,16 @@ import Box from "@material-ui/core/Box";
 import FlatList from "flatlist-react";
 import Header from "./Header.js";
 import AboutTab from "./AboutTab";
-import LinearProgress from '@material-ui/core/LinearProgress';
+import LinearProgress from "@material-ui/core/LinearProgress";
 import { Button } from "@material-ui/core";
 import EditProfile from "./EditProfile";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import db from "./firebase.js";
-import {auth} from "./firebase.js";
+import { auth } from "./firebase.js";
 import { useParams } from "react-router-dom";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import { Redirect } from 'react-router'
-import Avatar from '@material-ui/core/Avatar';
+import { Redirect } from "react-router";
+import Avatar from "@material-ui/core/Avatar";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function About({userId}) {
+export default function About({ userId }) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const [loading, setLoading] = useState(false);
@@ -113,10 +113,10 @@ export default function About({userId}) {
   const signOut = () => {
     auth.signOut();
     setRedirect(true);
-  }
+  };
 
   if (redirect) {
-    return <Redirect to='/feed'/>;
+    return <Redirect to="/feed" />;
   }
 
   return (
@@ -124,18 +124,19 @@ export default function About({userId}) {
       <Header icon={<AccountBoxIcon fontSize={"large"} />} text={"Profile"} />
 
       {loading ? (
-       <LinearProgress />
+        <LinearProgress />
       ) : (
         <div className="about__body">
           <div
-            style={{
-              backgroundImage: "url(" + "/farmer.jpg" + ")",
-              width: "100%",
-              height: "250px",
-              backgroundPosition: "center top",
-              backgroundSize: "cover",
-              backgroundRepeat: "no-repeat",
-            }}
+            className="background__image"
+            // style={{
+            //   backgroundImage: "url(" + "/farmer.jpg" + ")",
+            //   width: "100%",
+            //   height: "250px",
+            //   backgroundPosition: "center top",
+            //   backgroundSize: "cover",
+            //   backgroundRepeat: "no-repeat",
+            // }}
           >
             <div className="profile__image">
               <div className="profile__image__name">
@@ -143,34 +144,37 @@ export default function About({userId}) {
                   className="profile__image__icon"
                   src={`${userData.iconUrl}`}
                 ></img> */}
-                <Avatar alt="Profile Icon"   src={`${userData.iconUrl}`} />
+
+                <Avatar alt="Profile Icon" src={`${userData.iconUrl}`} />
+
                 <span className="about__username">{userData.name}</span>
                 <span className="username__user">@{userData.userName}</span>
               </div>
-             
-              
+
               <div className="profile__image__edit">
-               <Button
-                  variant="contained"
-                  color="primary"
-                  size="large"
-                  onClick={signOut}
-                  className={classes.button}
-                  startIcon={<ExitToAppIcon />}
-                >
-                  LogOUt
-                </Button> 
-                {userId === uid ? 
-                
+                {userId === uid ? (
+                  <Button
+                    variant="contained"
+                    size="large"
+                    onClick={signOut}
+                    startIcon={<ExitToAppIcon />}
+                    className="about__logout"
+                  >
+                    Logout
+                  </Button>
+                ) : null}
+                {userId === uid ? (
                   <EditProfile userData={userData} reload={getUserData} />
-                  : null}
+                ) : null}
               </div>
             </div>
-            <div className="about__bio" >
-              <p style={{ fontSize: "15px", color: "#c8d6d2" }} >{userData.bio}</p>
-              </div>
+            <div className="about__bio">
+              <p style={{ fontSize: "15px", color: "#c8d6d2" }}>
+                {userData.bio}
+              </p>
+            </div>
           </div>
-          <div className={classes.root} style={{ marginTop: "200px" }}>
+          <div className={classes.root} className="tabs__likes">
             <AppBar
               position="sticky"
               style={{
@@ -222,7 +226,7 @@ export default function About({userId}) {
                     against={item.against}
                   />
                 )}
-                renderWhenEmpty={() => <div></div>}
+                renderWhenEmpty={() => <div> <p>you Haven't voted to any topic yet..</p> </div>}
               />
             </TabPanel>
           </div>

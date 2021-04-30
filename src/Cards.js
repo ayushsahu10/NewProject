@@ -48,6 +48,12 @@ const DotMenu = ({
   };
 
   const savePosts = () => {
+
+    if(auth.currentUser === null){
+      alert("info", "Login to WiseIndia");
+      return;
+    }
+
     db.collection("userDetails")
       .doc(auth.currentUser.uid)
       .update({
@@ -58,6 +64,7 @@ const DotMenu = ({
         alert("success", "saved");
       });
   };
+  
 
   const removePost = () => {
     db.collection("userDetails")
@@ -79,6 +86,10 @@ const DotMenu = ({
   };
 
   const handleClickOpenReport = () => {
+    if(auth.currentUser === null){
+      alert("info", "Login to WiseIndia");
+      return;
+    }
     setOpenReport(true);
     setAnchorEl(null);
   };
@@ -89,6 +100,7 @@ const DotMenu = ({
   };
 
   const sendReport = () => {
+
     if (reportText.length < 50) {
       alert("error", "Report text must be 50 characters long'...");
       return;
@@ -199,7 +211,7 @@ function Cards({
       <div className="cards">
         <div className="mob__heading">
           <Link to={`/feed/${uid}`}>
-            <h2 style={{ color: "#324e4e", fontSize: "20px" }}># {headLine}</h2>
+            <h2 style={{ color: "#324e4e", fontSize: "18px" }}>{headLine}</h2>
           </Link>
           <DotMenu
             showShareModal={showShareModal}
@@ -216,8 +228,8 @@ function Cards({
         <div className="para">
           <div className="desktop__heading">
             <Link to={`/feed/${uid}`}>
-              <h2 style={{ color: "#324e4e", fontSize: "20px" }}>
-                # {headLine}
+              <h2 style={{ color: "#324e4e", fontSize: "24px" }}>
+                {headLine}
               </h2>
             </Link>
             <DotMenu

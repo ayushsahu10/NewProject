@@ -7,8 +7,8 @@ import { auth } from "./firebase.js";
 import Cards from "./Cards";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
-import {SharePost} from './PostUtilities.js';
-
+import { SharePost } from "./PostUtilities.js";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -20,11 +20,11 @@ function Bookmark() {
   const [loading, setLoading] = useState(true);
   const [shareModal, setShareModal] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
-  const [alertType, setAlertType] = useState('error');
+  const [alertType, setAlertType] = useState("error");
   const [alertMessage, setAlertMessage] = useState("");
   const [postId, setPostId] = useState("");
 
-  const handleClickAlert = (type,message) => {
+  const handleClickAlert = (type, message) => {
     setAlertType(type);
     setAlertMessage(message);
     setOpenAlert(true);
@@ -32,7 +32,7 @@ function Bookmark() {
 
   const showShareModal = () => {
     setShareModal(true);
-  }
+  };
 
   const handleCloseAlert = (event, reason) => {
     if (reason === "clickaway") {
@@ -54,9 +54,10 @@ function Bookmark() {
     await Promise.all(
       savedPost_ids.map(async (id) => {
         let data = await db.collection("posts").doc(id).get();
-        posts.push({...data.data(),uid:id});
+        posts.push({ ...data.data(), uid: id });
       })
     );
+    setLoading(false);
     console.log(posts);
     setSaved(posts);
   };
@@ -68,23 +69,27 @@ function Bookmark() {
   return (
     <div className="bookmark">
       <Header icon={<SaveAltIcon fontSize="large" />} text={"Bookmarks"} />
-      <div>
-        {saved.map((item) => (
-          <Cards
-            headLine={item.headLine}
-            description={item.description}
-            img={item.img}
-            remove={true}
-            favour={item.favour}
-            against={item.against}
-            alert={handleClickAlert}
-            showShareModal={showShareModal}
-            uid={item.uid}
-            getSaved={getSaved}
-            setPostId={setPostId}
-          />
-        ))}
-      </div>
+      {loading ? (
+        <LinearProgress />
+      ) : (
+        <div className="bookmark__body" >
+          {saved.map((item) => (
+            <Cards
+              headLine={item.headLine}
+              description={item.description}
+              img={item.img}
+              remove={true}
+              favour={item.favour}
+              against={item.against}
+              alert={handleClickAlert}
+              showShareModal={showShareModal}
+              uid={item.uid}
+              getSaved={getSaved}
+              setPostId={setPostId}
+            />
+          ))}
+        </div>
+      )}
       <Snackbar
         open={openAlert}
         autoHideDuration={4000}
@@ -94,7 +99,15 @@ function Bookmark() {
           {alertMessage}
         </Alert>
       </Snackbar>
-      <SharePost shareModal={shareModal}  setShareModal={setShareModal}  alert={handleClickAlert}  url={window.location.href.slice(0,window.location.href.lastIndexOf("/"))+`/feed/${postId}`} />
+      <SharePost
+        shareModal={shareModal}
+        setShareModal={setShareModal}
+        alert={handleClickAlert}
+        url={
+          window.location.href.slice(0, window.location.href.lastIndexOf("/")) +
+          `/feed/${postId}`
+        }
+      />
     </div>
   );
 }

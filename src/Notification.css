@@ -79,11 +79,20 @@
   cursor: pointer;
 }
 
+.notification__body {
+  overflow: scroll;
+}
+
 @media only screen and (max-width: 1000px) {
   .notification {
     flex: 1;
+    height: 95vh;
+    border: 1px solid black;
   }
   .reply_footer {
     width: 80%;
+  }
+  .notification__body{
+    padding-bottom: 50px;
   }
 }

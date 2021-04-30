@@ -1,6 +1,5 @@
 .header_cmp {
     display: flex;
-    width: 100%;
     padding: 10px;
     background-color: #FFF;
     align-items: center;
@@ -17,4 +16,11 @@
 }
 .header_cmp > .MuiSvgIcon-root {
     color: #8fa4ab;
+}
+
+@media only screen and (max-width: 1000px) {
+    .header_cmp{
+        padding: 5px;
+        margin-bottom: 0px;
+    }
 }

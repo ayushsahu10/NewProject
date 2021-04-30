@@ -63,9 +63,9 @@ function EditProfile({ userData, reload }) {
 
   const mystyle__button = {
     color: "white",
-    padding: "15px 32px",
-    borderRadius: "30px",
-    backgroundColor: "rgba(56,56,209,255)" /* Green */,
+    padding: "10px 25px",
+    borderRadius: "20px",
+    backgroundColor: "#2381db" /* Green */,
     fontSize: "15px",
     border: "none",
     // boxShadow: "0px 10px 24px rgba(112, 144, 176, 0.8)",
@@ -90,14 +90,14 @@ function EditProfile({ userData, reload }) {
   };
 
   const updateUserDetails = async () => {
-    if (name.trim().length < 6)
-      handleClickAlert("error", "Name must be 5 character long..");
-    else if (userName.trim().length < 6)
-      handleClickAlert("error", "UserName must be 5 character long..");
+    if (name.trim().length < 6 ||  name.trim().length > 20 )
+      handleClickAlert("error", "Name must be 5-20 character long..");
+    else if (userName.trim().length < 5 || userName.trim().length > 15  )
+      handleClickAlert("error", "UserName must be 5-15 character long..");
     else if (bio.trim().length < 20 || bio.trim().length > 251)
       handleClickAlert("error", "Bio must be 20-251 character long..");
-    else if (location.trim().length < 10)
-      handleClickAlert("error", "Location must be 10 character long..");
+    else if (location.trim().length < 3 || location.trim().length > 30)
+      handleClickAlert("error", "Location must be 3-30 character long..");
     else {
       setLoading(true);
       let photoUrl = iconUrl;
@@ -118,7 +118,7 @@ function EditProfile({ userData, reload }) {
       if (userName.trim() !== userData.userName) {
         let data = await db
           .collection("userDetails")
-          .where("userName", "==", userName)
+          .where("userName", "==", userName.trim())
           .get();
         if (data.docs.length) {
           handleClickAlert("error", "UserName is already taken");
@@ -139,6 +139,7 @@ function EditProfile({ userData, reload }) {
         iconUrl:photoUrl
       })
       .then(() => {
+
         setLoading(false);
         handleClickAlert("success", "Profile Updated...");
         handleClose();
@@ -148,9 +149,16 @@ function EditProfile({ userData, reload }) {
 
   return (
     <div className="edit__profile">
-      <Button color="black" onClick={handleClickOpen}>
-        Edit Profile
-      </Button>
+      <div className="edit__button">
+        <Button
+          variant="contained"
+          className="edit__button"
+          onClick={handleClickOpen}
+          startIcon={<EditIcon />}
+        >
+          Edit Profile
+        </Button>
+      </div>
       <Dialog
         open={open}
         onClose={handleClose}
@@ -229,6 +237,7 @@ function EditProfile({ userData, reload }) {
                 color="primary"
                 style={{
                   width: "100%",
+                  marginBottom: "10px",
                 }}
               />
 
@@ -242,6 +251,7 @@ function EditProfile({ userData, reload }) {
                 style={{
                   width: "100%",
                   marginTop: "10px",
+                  marginBottom: "10px",
                 }}
               />
               <TextField
@@ -254,6 +264,7 @@ function EditProfile({ userData, reload }) {
                 style={{
                   width: "100%",
                   marginTop: "10px",
+                  marginBottom: "10px",
                 }}
               />
 
@@ -272,6 +283,7 @@ function EditProfile({ userData, reload }) {
                 style={{
                   width: "100%",
                   marginTop: "10px",
+                  marginBottom: "10px",
                 }}
               />
 
@@ -287,6 +299,7 @@ function EditProfile({ userData, reload }) {
                 style={{
                   width: "100%",
                   marginTop: "10px",
+                  marginBottom: "10px",
                 }}
               />
             </div>

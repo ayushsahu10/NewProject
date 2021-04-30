@@ -48,9 +48,12 @@
 }
 @media only screen and (max-width: 1000px){
   .feed {
-   flex: 0.8;
+   flex: 1;
    border: none;
-   height: 90vh;
+   height: 95vh;
+  }
+  .feed__posts{
+    padding-bottom: 30px;
   }
   .loading {
     margin-top: 50%;

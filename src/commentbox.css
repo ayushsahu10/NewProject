@@ -1,8 +1,8 @@
 .commentbox {
     display: flex;
-    justify-content: space-around;
-    align-items: center;
+    justify-content: space-between;
     margin-bottom: 15px;
+    background-color: #FCFCFC;
   }
 
   .commentbox > form {
@@ -12,20 +12,71 @@
   }
   
   .commentbox__input {
-    background-color: #fff;
-    display: flex;
+    background-color: #FCFCFC;
+    flex:1;
+    margin-left: 10px;
     border: none;
-    width: 60%;
-    border-bottom: 2px solid red;
+    align-self: center;
     outline: none;
+    align-items: center;
   }
 
-  .MuiInput-underline{
+  .coomentBox__mid {
+    flex: 0.7;
+  }
+
+  .commentbox__input > .MuiInput-underline{
     border: none !important ;
   }
 
+  .commentbox__input > .MuiInput-underline::before {
+    border: none !important;
+  }
+
+  .commentbox__input > .MuiInput-underline::after{
+    border: none !important;
+  }
+
+  .commentboc__profileIcon {
+    align-items: center;
+    flex: 0.10;
+  }
+
+  .coomentBox__right {
+    justify-content: space-between;
+    flex: 0.20;
+    display: flex;
+  }
+  .commentbox__thumb{
+    align-items: center;
+    justify-content: center;
+    display: flex;
+  }
   @media only screen and (max-width: 1000px){ 
-    .commentbox__thumb > p {
+   
+  }
+
+  @media only screen and (max-width: 800px){ 
+    .commentboc__profileIcon {
       display: none;
     }
+    .commentbox__input {
+      margin-left: 5px;
+      padding: 5px;
+      font-size: 10px;
+    }
+    .commentbox__thumb > p  {
+      display: none;
+    }
+    .commentbox {
+      padding-left: 10px;
+    }
+    .commentbox__input > .MuiInput-underline {
+      font-size: 12px;
+      padding: 5px;
+    }
+    .coomentBox__mid {
+      flex: 1;
+    }
+    
   }
