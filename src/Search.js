@@ -8,6 +8,8 @@ import ClearIcon from "@material-ui/icons/Clear";
 import { IconButton } from "@material-ui/core";
 import PageviewIcon from '@material-ui/icons/Pageview';
 import Zoom from '@material-ui/core/Zoom';
+import Header from './Header.js';
+
 
 export default function Search() {
   const [loading, setLoading] = useState(false);
@@ -17,16 +19,14 @@ export default function Search() {
   const handleSearch = (e) => {
     setInput(e.target.value);
 
-    if (input.trim().length) {
-      console.log(input, "inside serach ");
+    if (input.trim()) {
+      console.log(input.split(" "), "inside serach ");
       setLoading(true);
 
       let d = [];
 
       db.collection("posts")
-        .orderBy("headLineLower")
-        .startAt(input.trim().toLowerCase())
-        .endAt(input.trim().toLowerCase() + "\uf8ff")
+        .where("tags","array-contains-any",input.split(" "))
         .get()
         .then((data) =>
           data.docs.map((doc) => d.push({ ...doc.data(), uid: doc.id }))
@@ -43,12 +43,13 @@ export default function Search() {
     setInput("");
   };
 
+
   return (
     <div className='main' >
-      <div className="search__header">
-        <PageviewIcon fontSize={"large"} />
-        <p>Search</p>
-      </div>
+    <Header  
+      icon={<PageviewIcon fontSize={"large"} />}
+      text={"Search"}
+    />
       <Zoom in={true}>
       <div className="search">
         <div className="widgets__input">
@@ -66,7 +67,7 @@ export default function Search() {
         {!input.length ? (
           <img  className='search__img' src="search.png" />
         ) : (
-          <div>
+          <>
             {loading ? (
               <div>
                 <SearchLoading />
@@ -88,7 +89,7 @@ export default function Search() {
                 ))}
               </div>
             )}
-          </div>
+          </>
         )}
       </div>
       </Zoom>

@@ -11,3 +11,17 @@
   text-align: center;
   border-bottom: 15px solid var(--twitter-background);
 }
+
+.bookmark__body {
+  overflow: scroll;
+}
+
+@media only screen and (max-width: 1000px) {
+  .bookmark{
+    flex: 1;
+    height: 95vh;
+  }
+  .bookmark__body{
+    padding-bottom: 50px;
+  }
+}

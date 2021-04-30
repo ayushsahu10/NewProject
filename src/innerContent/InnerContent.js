@@ -20,13 +20,15 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import Header from "../Header.js";
+import HomeIcon from "@material-ui/icons/Home";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
 const options = ["Select opinion", "Favour", "Against"];
-
 
 const useStyles = makeStyles((theme) => ({
   hidden: {
@@ -145,8 +147,6 @@ const Comments = ({
       });
   };
 
-
-
   return (
     <div className="comment">
       <Comment
@@ -232,6 +232,7 @@ function InnerContent({ userData }) {
   const [openAlert, setOpenAlert] = useState(false);
   const [alertType, setAlertType] = useState("error");
   const [alertMessage, setAlertMessage] = useState("");
+  const [multilineDesc, setMultilineDesc] = ("")
   const [cmtType, setCmtType] = React.useState("Total Opinions");
   const classes = useStyles();
 
@@ -264,7 +265,9 @@ function InnerContent({ userData }) {
       .doc(postId)
       .get()
       .then((data) => {
-        setData(data.data());
+        setData({...data.data(),description:data.data().description.replaceAll("\\n","\n")});
+
+        console.log(data.data().description.replaceAll("\\n","\n"))
         setLoading(false);
       });
   };
@@ -276,29 +279,23 @@ function InnerContent({ userData }) {
     else return false;
   };
 
-  const getTotalCommentsLen =  async () => {
-    let ref = db
-    .collection("posts")
-    .doc(postId)
-    .collection("comments");
+  const getTotalCommentsLen = async () => {
+    let ref = db.collection("posts").doc(postId).collection("comments");
 
-    if (cmtType === "Total Opinions"){
+    if (cmtType === "Total Opinions") {
       const cmtlen = await ref.get();
-    setCmtLength(cmtlen.docs.length);
+      setCmtLength(cmtlen.docs.length);
+    } else if (cmtType === "In Favour") {
+      const cmtlen = await ref.where("infavour", "==", true).get();
+      setCmtLength(cmtlen.docs.length);
+    } else {
+      const cmtlen = await ref.where("infavour", "==", false).get();
+      setCmtLength(cmtlen.docs.length);
     }
-    else if (cmtType === "In Favour"){
-      const cmtlen = await ref.where("infavour","==",true).get();
-    setCmtLength(cmtlen.docs.length);
-    }else{
-      const cmtlen = await ref.where("infavour","==",false).get();
-    setCmtLength(cmtlen.docs.length);
-    }
-
-  }
+  };
 
   const getComments = async () => {
     setCommentLoading(true);
-
 
     const snapshot = await db
       .collection("posts")
@@ -374,7 +371,7 @@ function InnerContent({ userData }) {
           }
 
           setComments(newComments);
-          if (snapshot.docs.length < 4) setLastDoc(null);
+          if (snapshot.docs.length < 10) setLastDoc(null);
         } else {
           setLastDoc(null);
         }
@@ -450,132 +447,132 @@ function InnerContent({ userData }) {
     getTotalCommentsLen();
   }, [cmtType]);
 
-  switch (loading) {
-    case false:
-      return (
-        <div className="innerContent__main">
-          <div className="main__heading">
-            <h1># {data.headLine}</h1>
-          </div>
-          <div className="innerContent__top">
-            <div className="content">
-              <img src={`${data.img}`}></img>
-            </div>
+  return (
+    <div className="innerContent__main">
+      <Header icon={<HomeIcon fontSize={"large"} />} text={"Home"} />
+      {loading ? (
+        <LinearProgress />
+      ) : (
+        <div className="innerContent__top">
+          <h1> {data.headLine}</h1>
+          {/* <div className="card__img"> */}
+            <img  className="card__img" src={`${data.img}`}></img>
+          {/* </div> */}
 
-            <div className="pollcss">
-              <div className="pollcss__left">
-                <Poll favour={data.favour} postId={postId} against={data.against} />
-              </div>
-              <PostUtilities
-                ismore={
-                  <div onClick={() => setIsMore(!isMore)}>
-                    <IconButton>
-                      {isMore ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-                    </IconButton>
-                    {isMore ? <p>Less </p> : <p>More </p>}
-                  </div>
-                }
-                cmtLength={cmtLength}
-                savePost={savePosts}
+          <div className="pollcss">
+            <div className="pollcss__left">
+              <Poll
+                favour={data.favour}
+                postId={postId}
+                against={data.against}
               />
             </div>
+            <PostUtilities
+              ismore={
+                <div onClick={() => setIsMore(!isMore)}>
+                  <IconButton>
+                    {isMore ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                  </IconButton>
+                  {isMore ? <p>Less </p> : <p>More </p>}
+                </div>
+              }
+              cmtLength={cmtLength}
+              savePost={savePosts}
+              alert={handleClickAlert}
+            />
+          </div>
 
-            {isMore ? (
-              <p className="main__para"> {data.description} </p>
-            ) : (
-              <p className="main__para">
-                {data.description.slice(0, 200)}.....
-              </p>
-            )}
 
-            <Divider />
-            <div className="comment__top">
-              <h2>{cmtLength} Total opinions {cmtType !== "Total Opinions" ? cmtType : ""} </h2>
-              <FormControl variant="outlined" className={classes.formControl}>
-                <InputLabel id="demo-simple-select-outlined-label">
-                  Total{" "}
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-outlined-label"
-                  id="demo-simple-select-outlined"
-                  value={cmtType}
-                  onChange={handleChange}
-                  label="Age"
-                >
-                  <MenuItem value="Total Opinions">
-                    <em>Total Opinions</em>
-                  </MenuItem>
-                  <MenuItem value={"In Favour"}>In Favour</MenuItem>
-                  <MenuItem value={"In Against"}>In Against</MenuItem>
-                </Select>
-              </FormControl>
-            </div>
+          {isMore ? (
+            <p className="main__para"> {`${data.description}`} </p>
+          ) : (
+            <p className="main__para">{data.description.slice(0, 200)}.....</p>
+          )}
 
-            <CommentBox postComment={postComment} userIcon={userData.iconUrl} />
-            <Divider />
-            {commentLoading ? (
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  marginTop: "15px",
-                }}
+          <Divider />
+          <div className="comment__top">
+            <h5>
+              {cmtLength} Total opinions{" "}
+              {cmtType !== "Total Opinions" ? cmtType : ""}
+            </h5>
+            <FormControl variant="outlined" className={classes.formControl}>
+              <InputLabel id="demo-simple-select-outlined-label">
+                Total
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-outlined-label"
+                id="demo-simple-select-outlined"
+                value={cmtType}
+                onChange={handleChange}
+                label="Age"
               >
-                <CircularProgress />
-              </div>
-            ) : (
-              <FlatList
-                list={comments}
-                renderItem={(item) => (
-                  <Comments
-                    userData={userData}
-                    postIcon={data.img}
-                    item={item}
-                    userIcon={userData.iconUrl}
-                    userId={userData.id}
-                    postId={postId}
-                    handleClickAlert={handleClickAlert}
-                    deleteComment={deleteComment}
-                    sendReport={sendReport}
-                  />
-                )}
-                hasMoreItems={lastDoc !== null ? true : false}
-                loadMoreItems={getMoreComments}
-                paginationLoadingIndicator={
-                  <div
-                    style={{
-                      display: "flex",
-                      flex: 1,
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <CircularProgress />
-                  </div>
-                }
-                renderWhenEmpty={() => <div></div>}
-              />
-            )}
+                <MenuItem value="Total Opinions">
+                  <em>Total Opinions</em>
+                </MenuItem>
+                <MenuItem value={"In Favour"}>In Favour</MenuItem>
+                <MenuItem value={"In Against"}>In Against</MenuItem>
+              </Select>
+            </FormControl>
           </div>
-          <Snackbar
-            open={openAlert}
-            autoHideDuration={3000}
-            onClose={handleCloseAlert}
-          >
-            <Alert onClose={handleCloseAlert} severity={alertType}>
-              {alertMessage}
-            </Alert>
-          </Snackbar>
+
+          <CommentBox postComment={postComment} userIcon={userData.iconUrl} />
+          <Divider />
+          {commentLoading ? (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                marginTop: "15px",
+              }}
+            >
+              <CircularProgress />
+            </div>
+          ) : (
+            <FlatList
+              list={comments}
+              renderItem={(item) => (
+                <Comments
+                  userData={userData}
+                  postIcon={data.img}
+                  item={item}
+                  userIcon={userData.iconUrl}
+                  userId={userData.id}
+                  postId={postId}
+                  handleClickAlert={handleClickAlert}
+                  deleteComment={deleteComment}
+                  sendReport={sendReport}
+                />
+              )}
+              hasMoreItems={lastDoc !== null ? true : false}
+              loadMoreItems={getMoreComments}
+              paginationLoadingIndicator={
+                <div
+                  style={{
+                    display: "flex",
+                    flex: 1,
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <CircularProgress />
+                </div>
+              }
+              renderWhenEmpty={() => <div></div>}
+            />
+          )}
         </div>
-      );
-    default:
-      return (
-        <div className="main__loading">
-          {" "}
-          <CircularProgress />{" "}
-        </div>
-      );
-  }
+      )}
+      <Snackbar
+        open={openAlert}
+        autoHideDuration={3000}
+        onClose={handleCloseAlert}
+      >
+        <Alert onClose={handleCloseAlert} severity={alertType}>
+          {alertMessage}
+        </Alert>
+      </Snackbar>
+    </div>
+  );
 }
 
 export default InnerContent;

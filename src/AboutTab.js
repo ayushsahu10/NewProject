@@ -12,7 +12,7 @@ function AboutTab({  uid, headLine, img, favour, against }) {
 
         <img src={`${img}`}></img>
 
-          <h2># {headLine.slice(0,50)}...</h2>
+          <h2> {headLine.slice(0,50)}...</h2>
 
         </div>
         <Poll favour={favour} against={against} />

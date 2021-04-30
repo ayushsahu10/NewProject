@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -17,28 +17,41 @@ import FormControl from "@material-ui/core/FormControl";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import IconButton from "@material-ui/core/IconButton";
-import { Redirect } from 'react-router'
+import { Redirect } from "react-router";
 import { Link } from "react-router-dom";
 import CloseIcon from "@material-ui/icons/Close";
 import InputAdornment from "@material-ui/core/InputAdornment";
-
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-function LoginSec({show}) {
+function LoginSec({ show }) {
   const [open, setOpen] = useState(show);
   const [emailId, setEmailId] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
-  const [redirect, setRedirect] = useState(false);
+  const [openForgotPass, setOpenForgotPass] = React.useState(false);
+  const [redirect, setRedirect] = useState(
+    auth.currentUser !== null && !loading
+  );
+
+  const handleClickOpenForgotPass = () => {
+    setOpenForgotPass(true);
+  };
+
+  const handleCloseForgotPass = () => {
+    setOpenForgotPass(false);
+  };
 
   useEffect(() => {
-    console.log('=>>>>>>>>>>',show)
-  }, [])
+    console.log("=>>>>>>>>>>", show);
+  }, []);
 
   const handleClose = () => {
     setRedirect(true);
@@ -46,7 +59,7 @@ function LoginSec({show}) {
   const mystyle = {
     color: "white",
     padding: "10px 32px",
-    marginTop:"20px",
+    marginTop: "20px",
     borderRadius: "30px",
     backgroundColor: "#2381db" /* Green */,
     fontSize: "15px",
@@ -98,7 +111,6 @@ function LoginSec({show}) {
     event.preventDefault();
   };
 
-
   const handleClickAlert = () => {
     setOpenAlert(true);
   };
@@ -122,27 +134,24 @@ function LoginSec({show}) {
       setLoading(true);
 
       if (!emailId.includes("@")) {
-
         let data = await db
           .collection("userDetails")
           .where("userName", "==", `${emailId}`)
           .get();
         let id = !!data.docs[0] ? data.docs[0].data().emailId : "";
 
-        if(id){
-          login(id,password);
+        if (id) {
+          login(id, password);
+        } else {
+          setAlertMessage("user not found !...");
+          handleClickAlert();
+          setLoading(false);
         }
-        else{
-        setAlertMessage("user not found !...");
-        handleClickAlert();
-        setLoading(false);
-        }
-      } else login(emailId,password);
+      } else login(emailId, password);
     }
   };
 
-  const login = (id,pass) => {
-    
+  const login = (id, pass) => {
     auth
       .signInWithEmailAndPassword(id, pass)
       .then(() => {
@@ -156,50 +165,90 @@ function LoginSec({show}) {
       });
   };
 
-  const signInGoogle = () => {
-    setLoading(true);
-    let result = {}
-    auth.signInWithPopup(provider)
-    .then((res) => {
-      result = res;
+  const checkUser = async (res) => {
+    const data = await db
+      .collection("userDetails")
+      .where("emailId", "==", res.user.email)
+      .get();
+    if (data.docs.length) {
       setLoading(false);
       setRedirect(true);
-
-    }).catch((e) => {
-      setLoading(false);
-      setAlertMessage(e.message);
-      handleClickAlert();
-    });
+    } else {
+      db.collection("userDetails")
+        .doc(res.user.uid)
+        .set({
+          name: res.user.displayName,
+          emailId: res.user.email,
+          iconUrl: res.user.photoURL,
+          userName: res.user.email.slice(0, res.user.email.indexOf("@")),
+          bio: "I am new to wiseIndia...",
+          location: "",
+          savedPosts: [],
+        })
+        .then(() => {
+          setLoading(false);
+          setRedirect(true);
+        });
+    }
   };
-  
+
+  const signInGoogle = () => {
+    setLoading(true);
+    auth
+      .signInWithPopup(provider)
+      .then((res) => checkUser(res))
+      .catch((e) => {
+        setLoading(false);
+        setAlertMessage(e.message);
+        handleClickAlert();
+      });
+  };
+
+  const sendpasswordLink = () => {
+    if (!emailId) {
+      setAlertMessage("Email or username can't be Empty !...");
+      handleClickAlert();
+    } else {
+      auth
+        .sendPasswordResetEmail(emailId)
+        .then(() => {
+          setAlertMessage("Email Sent!...");
+          handleClickAlert();
+          handleCloseForgotPass();
+        })
+        .catch((e) => {
+          setAlertMessage(e.message);
+          handleClickAlert();
+        });
+    }
+  };
 
   if (redirect) {
-    return <Redirect to='/feed'/>;
+    return <Redirect to="/feed" />;
   }
 
   return (
-      <div
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      <Dialog
+        open={true}
+        onClose={handleClose}
+        fullWidth
+        maxWidth="md"
+        aria-labelledby="form-dialog-title"
+        classes={{ paper: classes.rootStyle }}
         style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
+          backgroundImage: `url("bg2.jpg")`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
         }}
       >
-        <Dialog
-          open={true}
-          onClose={handleClose}
-          fullWidth
-          maxWidth="md"
-          aria-labelledby="form-dialog-title"
-          classes={{ paper: classes.rootStyle }}
-          style={{
-            backgroundImage: `url("bg2.jpg")`,
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "cover",
-          }}
-        >
-
-          <DialogContent style={{padding:"0px"}} >
+        <DialogContent style={{ padding: "0px" }}>
           <div className="r__main">
             <div className="r__left">
               <img src="https://firebasestorage.googleapis.com/v0/b/thewiseindia-8e9a9.appspot.com/o/register.jpg?alt=media&token=3e384896-b902-4cb2-9e8c-e06288af84db"></img>
@@ -212,7 +261,7 @@ function LoginSec({show}) {
                   <CloseIcon />
                 </IconButton>
               </div>
-              <div className="r__rightBody" style={{marginTop:"8%"}} >
+              <div className="r__rightBody" style={{ marginTop: "8%" }}>
                 <form className={classes.root} noValidate autoComplete="off">
                   <TextField
                     id="name"
@@ -262,14 +311,17 @@ function LoginSec({show}) {
                       labelWidth={70}
                     />
                   </FormControl>
-                </form>
-                {loading ? (
-                  <Button
-                    color="primary"
-                    variant="outlined"
-                    style={mystyle}
+                  <p
+                    className="login__forgotPassword"
+                    onClick={handleClickOpenForgotPass}
                   >
-                  <CircularProgress color={"#FFF"}  size={20}  />
+                    Forgot Password
+                  </p>
+                </form>
+
+                {loading ? (
+                  <Button color="primary" variant="outlined" style={mystyle}>
+                    <CircularProgress color={"#FFF"} size={20} />
                   </Button>
                 ) : (
                   <Button
@@ -278,7 +330,7 @@ function LoginSec({show}) {
                     variant="outlined"
                     style={mystyle}
                   >
-                    <p>Sign Up</p>
+                    <p>Login</p>
                   </Button>
                 )}
                 <div
@@ -287,7 +339,7 @@ function LoginSec({show}) {
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
-                    marginTop:"20px"
+                    marginTop: "20px",
                   }}
                 >
                   <span
@@ -300,12 +352,12 @@ function LoginSec({show}) {
                     Or register with
                   </span>
                 </div>
-                <div className="signinwith" onClick={signInGoogle} >
+                <div className="signinwith" onClick={signInGoogle}>
                   <img src="google.png"></img>
                 </div>
                 <div className="register__signup">
-                <Link to={"/register"} >
-                  <p>Dont have an Acoount?Register... </p>
+                  <Link to={"/register"}>
+                    <p>Dont have an Account?Register... </p>
                   </Link>
                 </div>
                 <Snackbar
@@ -320,9 +372,48 @@ function LoginSec({show}) {
               </div>
             </div>
           </div>
-          </DialogContent>
-        </Dialog>
-      </div>
+        </DialogContent>
+      </Dialog>
+      <Dialog
+        open={openForgotPass}
+        onClose={handleCloseForgotPass}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogTitle id="form-dialog-title">Forgot Password</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Enter Your Registered Email Id,You will recieve an password reset
+            link on your email.
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            onChange={(e) => setEmailId(e.target.value.trim())}
+            id="name"
+            label="Email Address"
+            type="email"
+            fullWidth
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseForgotPass} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={sendpasswordLink} color="primary">
+            Submit
+          </Button>
+        </DialogActions>
+        <Snackbar
+          open={openAlert}
+          autoHideDuration={6000}
+          onClose={handleCloseAlert}
+        >
+          <Alert onClose={handleCloseAlert} severity="error">
+            {alertMessage}
+          </Alert>
+        </Snackbar>
+      </Dialog>
+    </div>
   );
 }
 

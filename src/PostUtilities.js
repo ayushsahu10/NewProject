@@ -32,6 +32,7 @@ const SharePost = ({shareModal,setShareModal,url,alert}) => {
     setShareModal(false)
   }
 
+
    return <Modal
    visible={shareModal}
    width="400"
@@ -70,7 +71,7 @@ const SharePost = ({shareModal,setShareModal,url,alert}) => {
  </Modal>
 }
 
-export default function PostUtilities({ismore,savedPosts,cmtLength,savePost}) {
+export default function PostUtilities({ismore,savedPosts,cmtLength,savePost,alert}) {
   
   const [shareModal, setShareModal] = useState(false);
   
@@ -80,7 +81,7 @@ export default function PostUtilities({ismore,savedPosts,cmtLength,savePost}) {
 
   return (
     <div className="postUtilities">
-      <SharePost shareModal={shareModal}  setShareModal={setShareModal}  url={window.location.href} />
+      <SharePost shareModal={shareModal}  alert={alert} setShareModal={setShareModal}  url={window.location.href} />
       <div>
         <IconButton>
           <ChatBubbleIcon />

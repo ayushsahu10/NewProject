@@ -28,7 +28,7 @@
 
 .comment__headerSpecial {
   font-weight: 600;
-  font-size: 12px;
+  font-size: 10px;
   margin-left: 5px;
   color: #fff;
   background-color: rgba(0, 124, 199, 0.7);
@@ -67,5 +67,9 @@
 @media only screen and (max-width: 1000px) {
   .comment_footer {
     width: 80%;
+  }
+  .comment__headerSpecial {
+    display: inline-block;
+
   }
 }

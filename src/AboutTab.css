@@ -34,21 +34,20 @@ a {
 .innerpara > h2 {
   margin-left: 10px;
   cursor: pointer;
+  flex: 0.7;
 }
-/* .para :hover{
-      background-color: var(--twitter-color);
-      transition: color 100ms ease-out;'
-      border-radius: 30px;
-    } */
+
 .innerpara > img {
   height: 10vh;
   width: 25vw;
+  border-radius: 10px;
   object-fit: contain;
+  flex: 0.3;
 }
 
 .innerpara > p {
-  padding-left: 10px;
-  padding-top: 10px;
+  /* padding-left: 10px;
+  padding-top: 10px; */
 }
 
 .about__poll {

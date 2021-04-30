@@ -80,6 +80,19 @@ export default function Poll({ favour, against, postId,alert }) {
       .then(() => console.log("dislikes updated"));
   };
   
+  const nFormatter = (num) => {
+    if (num >= 1000000000) {
+       return (num / 1000000000).toFixed(1).replace(/\.0$/, '') + 'G';
+    }
+    if (num >= 1000000) {
+       return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+    }
+    if (num >= 1000) {
+       return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
+    }
+    return num;
+}
+
 
   return (
     <div className="poll">
@@ -108,7 +121,7 @@ export default function Poll({ favour, against, postId,alert }) {
             {parseFloat(fav * 100).toFixed(0)}%
           </p>
           <p className="poll__linePara" style={{ borderColor: "#4bd97e" }}>
-            {like.length} Votes
+            {nFormatter(like.length)} Votes
           </p>
         </div>
       </div>
@@ -126,7 +139,7 @@ export default function Poll({ favour, against, postId,alert }) {
         <div className="poll__line">
           <p style={{ color: "color: #323435;" }}>{ag * 100}%</p>
           <p className="poll__linePara" style={{ borderColor: "#ff0000" }}>
-            {dislike.length} Vote{" "}
+            {nFormatter(dislike.length)} Vote{" "}
           </p>
         </div>
         <div className="poll__leftSection">

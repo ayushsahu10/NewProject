@@ -21,6 +21,7 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(null);
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState({});
+  const w = window.innerWidth > 1000 ? "50%" : "70%";
 
   useEffect(() => {
     setTimeout(
@@ -35,7 +36,7 @@ function App() {
               .then(() => {
                 setLoading(false);
                 setLoggedIn(true);
-                console.log(userData);
+                console.log("=>>>>>>app.js",userData);
               });
           } else {
             setLoggedIn(false);
@@ -59,8 +60,7 @@ function App() {
               preserveAspectRatio: "xMidYMid slice",
             },
           }}
-          height={"50%"}
-          width={"50%"}
+          style={{height:"50%",width:w,padding:"20px",objectFit:"contain"}}
         />
        </div>
       ) : (

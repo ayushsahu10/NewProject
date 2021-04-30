@@ -4,16 +4,40 @@
     align-items: center;
     justify-content: space-between;
     padding: 50px 20px ;
+    background-color: #FFF;
+    box-shadow: 0 4px 8px 0 #e2e7ea,
+    0 6px 20px 0 #e2e7ea;
+    border-radius: 10px;
   }
   
   .login__button > p {
     margin: 20px;
   }
 
+  .wiseIndia__about{
+    color: #2c4c4b ;
+    font-weight: bold;
+  }
+
+  .login__button > .MuiAvatar-root {
+    height: 100px;
+    width: 100px;
+  }
+
   @media only screen and (max-width: 1000px) {
     .login__button {
-      padding: 5px 2px;
+      padding: 5px 10px;
       flex-direction: row;
+      box-shadow: none;
+      width: 100%;
+      justify-content: space-evenly;
+    }
+    .wiseIndia__about{
+      display: none;
+    }
+    .login__button > .MuiAvatar-root {
+      height: 40px;
+      width: 40px;
     }
 
   }

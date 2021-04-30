@@ -19,6 +19,17 @@
   position: relative;
 }
 
+.background__image {
+  background-image: url("https://firebasestorage.googleapis.com/v0/b/thewiseindia-8e9a9.appspot.com/o/bg2.jpg?alt=media&token=eca3db7f-2854-4181-ab21-ca476228c34a");
+
+  /* background-color: black; */
+  width: 100%;
+  height: 250px;
+  background-position: center top;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
 .profile__image {
   display: flex;
   justify-content: space-between;
@@ -30,25 +41,25 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}  
+}
 .profile__image__name > .MuiAvatar-root {
-  margin-top: 150px;
+  margin-top: 120px;
   height: 200px;
   width: 200px;
 }
-.profile__image__icon {
-  width:100%;
+/* .profile__image__icon {
+  width: 100%;
   margin-top: 100%;
   border: 1px green solid;
   border-radius: 50%;
-}
+} */
 
 .profile__image__edit {
   display: flex;
   justify-content: space-around;
   align-items: center;
   flex-direction: column;
-  margin-top: 280px;
+  margin-top: 275px;
 }
 
 .about__username {
@@ -57,11 +68,8 @@
   font-size: 150%;
 }
 
-.about__bio {
- 
-}
 .about__body {
-  background-color: #FFF;
+  background-color: #fff;
   border-radius: 10px;
   padding: 20px;
   overflow: scroll;
@@ -70,12 +78,93 @@
   box-shadow: none;
 }
 .makeStyles-root-1 > .MuiAppBar-positionSticky {
-    position: static;
-  }
+  position: static;
+}
+
+.tabs__likes {
+  margin-top: 250px;
+}
+
+.profile__image__edit > .MuiButton-root {
+  text-transform: none;
+  /* background: #d3d3d3; */
+  background: white;
+  border: 2px solid grey;
+  color: #2c2c2c;
+  cursor: pointer;
+  transition: all 0.5s;
+  border-radius: 10px;
+  position: relative;
+  box-shadow: none;
+}
+.profile__image__edit > .about__logout:hover {
+  /* background-color: #2b2bff;
+  color: white; */
+  background: white;
+  border: 2px solid #2b2bff;
+  color: #2b2bff;
+  box-shadow: none;
+}
 
 @media only screen and (max-width: 1000px) {
   .about {
     flex: 1;
     height: 90%;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .background__image {
+    height: 200px;
+  }
+
+  .profile__image__edit > .MuiButton-containedSizeLarge {
+    padding: 5px 15px;
+    font-size: 0.7rem;
+    border-radius: 20px;
+  }
+  .profile__image__edit > .MuiButton-text {
+    padding: 10px 10px;
+    font-size: 0.7em;
+  }
+  .profile__image__edit > .MuiButton-label {
+    font-size: 0.7em;
+  }
+  .profile__image__edit {
+    margin-top: 200px;
+    justify-content: center;
+  }
+  .edit__img__cover > img {
+    width: 390px;
+    height: 150px;
+    display: block;
+  }
+
+  .edit__image__profile > img {
+    width: 100px;
+  }
+
+  .profile__image__name > .MuiAvatar-root {
+    margin-top: 100px;
+    height: 150px;
+    width: 150px;
+  }
+  .about__username {
+    font-size: 1.1em;
+  }
+  .profile__image__edit > .MuiButton-root {
+    text-transform: none;
+    /* background: #d3d3d3;
+    color: #2c2c2c; */
+    /* cursor: pointer;
+    transition: all 0.5s; */
+    border-radius: 10px;
+    /* position: relative; */
+  }
+  .tabs__likes {
+    margin-top: 280px;
+  }
+  .MuiButton-root {
+    font-size: 0.7em;
   }
 }

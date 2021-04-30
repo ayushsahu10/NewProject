@@ -45,3 +45,10 @@
   width: 500px;
   height: auto;
 }
+.login__forgotPassword {
+  font-weight: bold;
+  color: #2c4c4b;
+  cursor: pointer;
+  padding: 5px;
+  font-size: 15px;
+}

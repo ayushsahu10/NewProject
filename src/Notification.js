@@ -4,6 +4,8 @@ import Header from "./Header.js";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import NotificationContent from "./NotificationContent.js";
 import db from "./firebase";
+import LinearProgress from '@material-ui/core/LinearProgress';
+
 
 function Notification({ userId,userData }) {
  
@@ -54,7 +56,7 @@ function Notification({ userId,userData }) {
       />
 
       {loading ? (
-        <h1>loading</h1>
+        <LinearProgress />
       ) : (
         <div className="notification__body">
           {notifications.map((noti) => (
